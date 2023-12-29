@@ -1,0 +1,38 @@
+Club,Simple,Melee,Bludgeoning,2,Light,0,0,0,1,4,4,0,0,None,1,sp
+Dagger,Simple,Melee,Piercing,1,Finesse,Light,Thrown,0,1,4,4,20,60,None,2,gp
+Greatclub,Simple,Melee,Bludgeoning,10,Two-Handed,0,0,0,1,8,8,0,0,None,2,sp
+Handaxe,Simple,Melee,Slashing,2,Light,Thrown,0,0,1,6,6,20,60,None,5,gp
+Javelin,Simple,Melee,Piercing,2,Thrown,0,0,0,1,6,6,30,120,None,5,sp
+Light Hammer,Simple,Melee,Bludgeoning,2,Light,Thrown,0,0,1,4,4,20,60,None,2,gp
+Mace,Simple,Melee,Bludgeoning,4,0,0,0,0,1,6,6,0,0,None,5,gp
+Quarterstaff,Simple,Melee,Bludgeoning,4,Versatile,0,0,0,1,6,8,0,0,None,2,sp
+Sickle,Simple,Melee,Slashing,2,Light,0,0,0,1,4,4,0,0,None,1,gp
+Spear,Simple,Melee,Piercing,3,Thrown,Versatile,0,0,1,6,8,20,60,None,1,gp
+Light Crossbow,Simple,Ranged,Piercing,5,Ammunition,Loading,Two-Handed,0,1,8,8,80,320,None,25,gp
+Dart,Simple,Ranged,Piercing,0.25,Finesse,Thrown,0,0,1,4,4,20,60,None,5,cp
+Shortbow,Simple,Ranged,Piercing,2,Ammunition,Two-Handed,0,0,1,6,6,80,320,Arrow,25,gp
+Sling,Simple,Ranged,Bludgeoning,0,Ammunition,0,0,0,1,4,4,0,0,Rocks,1,sp
+Battleaxe,Martial,Melee,Slashing,4,Versatile,0,0,0,1,8,10,0,0,None,10,gp
+Flail,Martial,Melee,Bludgeoning,2,0,0,0,0,1,8,8,0,0,None,10,gp
+Glaive,Martial,Melee,Slashing,6,Heavy,Reach,Two-Handed,0,1,10,10,0,0,None,20,gp
+Greataxe,Martial,Melee,Slashing,7,Heavy,Two-Handed,0,0,1,12,12,0,0,None,30,gp
+Greatsword,Martial,Melee,Slashing,6,Heavy,Two-Handed,0,0,2,6,6,0,0,None,50,gp
+Halberd,Martial,Melee,Slashing,6,Heavy,Reach,Two-Handed,0,1,10,10,0,0,None,20,gp
+Lance,Martial,Melee,Piercing,6,Reach,Special,0,0,1,12,12,0,0,None,10,gp
+Longsword,Martial,Melee,Slashing,3,Versatile,0,0,0,1,8,10,0,0,None,15,gp
+Maul,Martial,Melee,Bludgeoning,10,Heavy,Two-Handed,0,0,2,6,6,0,0,None,10,gp
+Morningstar,Martial,Melee,Piercing,4,0,0,0,0,1,8,8,0,0,None,15,gp
+Pike,Martial,Melee,Piercing,18,Heavy,Reach,Two-Handed,0,1,10,10,0,0,None,5,gp
+Rapier,Martial,Melee,Piercing,2,Finesse,0,0,0,1,8,8,0,0,None,25,gp
+Scimitar,Martial,Melee,Slashing,3,Finesse,Light,0,0,1,6,6,0,0,None,25,gp
+Shortsword,Martial,Melee,Piercing,2,Finesse,Light,0,0,1,6,6,0,0,None,10,gp
+Trident,Martial,Melee,Piercing,4,Thrown,Versatile,0,0,1,6,8,20,60,None,5,gp
+War Pick,Martial,Melee,Piercing,2,0,0,0,0,1,8,8,0,0,None,5,gp
+Warhammer,Martial,Melee,Bludgeoning,2,Versatile,0,0,0,1,8,10,0,0,None,15,gp
+Whip,Martial,Melee,Slashing,3,Finesse,Reach,0,0,1,4,4,0,0,None,2,gp
+Blowgun,Martial,Ranged,Piercing,1,Ammunition,Loading,0,0,1,1,1,25,100,Blowgun Dart,10,gp
+Hand Crossbow,Martial,Ranged,Piercing,3,Ammunition,Light,Loading,0,1,6,6,30,120,Arrow,75,gp
+Heavy Crossbow,Martial,Ranged,Piercing,18,Ammunition,Heavy,Loading,Two-Handed,1,10,10,100,400,Arrow,50,gp
+Longbow,Martial,Ranged,Piercing,2,Ammunition,Heavy,Two-Handed,0,1,8,8,150,600,Arrow,50,gp
+Net,Martial,Ranged,Piercing,3,Special,Thrown,0,0,0,0,0,5,15,None,1,gp
+Unarmed Strike,Simple,Melee,Bludgeoning,0,0,0,0,0,1,4,4,0,0,None,0,gp

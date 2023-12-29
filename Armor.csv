@@ -1,0 +1,13 @@
+Padded,Light,5,11,1,0,0,1,8
+Leather,Light,10,11,1,0,0,0,10
+Studded leather,Light,45,12,1,0,0,0,13
+Hide,Medium,10,12,1,2,0,0,12
+Chain shirt,Medium,50,13,1,2,0,0,20
+Scale mail,Medium,50,14,1,2,0,1,45
+Breastplate,Medium,400,15,1,2,0,0,20
+Half plate,Medium,750,15,1,2,0,1,40
+Ring mail,Heavy,30,14,0,0,0,1,40
+Chain mail,Heavy,75,16,0,0,13,1,55
+Splint,Heavy,200,17,0,0,15,1,60
+Plate,Heavy,1500,18,0,0,15,1,65
+Shield,Shield,10,2,0,0,0,0,6

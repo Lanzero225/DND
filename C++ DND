@@ -1,0 +1,3732 @@
+string WeaponList[37] = {"Club", "Dagger", "Greatclub", "Handaxe", "Javelin",
+	"Light Hammer", "Mace", "Quarterstaff", "Sickle", "Spear", "Light Crossbow",
+	"Dart", "Shortbow", "Sling", "Battleaxe", "Flail", "Glaive", "Greataxe",
+	"Greatsword", "Halberd", "Lance", "Longsword", "Maul", "Morningstar", "Pike",
+	"Rapier", "Scimitar", "Shortsword", "Trident", "War Pick", "Warhammer", "Whip",
+	"Blowgun", "Hand Crossbow", "Heavy Crossbow", "Longbow", "Net"};
+string RangedWeaponList[9] = {"Light Crossbow", "Dart", "Shortbow", "Sling", "Blowgun",
+	"Hand Crossbow", "Heavy Crossbow", "Longbow", "Net"};
+string MeleeWeaponList[28] = {"Club", "Dagger", "Greatclub", "Handaxe", "Javelin",
+	"Light Hammer", "Mace", "Quarterstaff", "Sickle", "Spear", "Battleaxe", "Flail", "Glaive", "Greataxe",
+	"Greatsword", "Halberd", "Lance", "Longsword", "Maul", "Morningstar", "Pike",
+	"Rapier", "Scimitar", "Shortsword", "Trident", "War Pick", "Warhammer", "Whip"};
+string ArmorList[13] = {"Padded Armor", "Leather Armor", "Studded Leather Armor",
+	"Hide Shirt", "Chain Shirt", "Scale Mail", "Breastplate", "Half Plate",
+	"Ring Mail", "Chain Mail", "Splint", "Plate", "Shield"};
+string ItemList[13] = {"Amongus"};
+string DamageTypes[13] = {"Acid", "Bludgeoning", "Cold", "Fire", "Force", "Lightning",
+	"Necrotic", "Piercing", "Poison", "Psychic", "Radiant", "Slashing", "Thunder"};
+string Conditions[15] = {"Blind", "Charmed", "Deafened", "Frightened", "Grappled",
+	"Incapacitated", "Invisible", "Paralyzed", "Petrified", "Poisoned", "Prone",
+	"Restrained", "Stunned", "Unconscious", "Exhausted"};
+string Skills[18] = {"Athletics", "Acrobatics", "Sleight of Hand", "Stealth", "Arcana",
+	"History", "Investigation", "Nature", "Religion", "Animal Handling", "Insight",
+	"Medicine", "Perception", "Survival", "Deception", "Intimidation", "Performance",
+	"Persuasion"};
+string Moves[7] = {"Approach", "Climb", "Swim", "Long Jump", "High Jump", "Fly", "Exit"};
+
+class MyChar{
+	private:
+		int health, maxHP, tempHP, hpCap;//This if when leveling up
+		int STR, DEX, CON, INT, WIS, CHA;
+		int STRmod, DEXmod, CONmod, INTmod, WISmod, CHAmod;
+		int AC, speed, exp, base_speed, fly_speed, base_fly, shield_act;
+		int prof;
+		string name, gender, playerClass[13], armor;
+		//Barbarian Stuff
+		string totem1, totem2, totem3;
+		//Fighter Stuff
+		int sup_die, sup_DC, max_sup_die, fs_sup_die, fs_sup_DC;
+		string f_style, s_tech;
+		int blind = 0, charmed = 0, deaf = 0, fright = 0, grapp = 0, incap = 0;
+		int invis = 0, paral = 0, petrif = 0, poison = 0, prone = 0, restra = 0;
+		int stunned = 0, uncons = 0, exhaust = 0, exh_level = 0;
+	public:
+		int ArtiLevel = 0, BarbLevel = 0, BardLevel = 0, ClerLevel = 0, DruiLevel = 0,
+		FighLevel = 0, MonkLevel = 0, PalaLevel = 0, RangLevel = 0, RoguLevel = 0,
+		SorcLevel = 0, WarlLevel = 0, WizaLevel = 0;
+		string ArtiSub, BarbSub, BardSub, ClerSub, DruiSub, FighSub, MonkSub;
+		string PalaSub, RangSub, RoguSub, SorcSub, WarlSub, WizaSub;
+		int TotalLevel = 0;
+		string CharWeapons[50] = {"Unarmed Strike"}, CharSpells[100], CharEquipment[100], CharArmor[15];
+		string armorProf[30], weaponProf[30], toolProf[30], features[30];
+		string savingThrows[6], skills[16], resistances[26], immunities[26];
+		string bonusActions[25], condition_immunities[30];
+		string otherActions[30] = {"Dash", "Approach"};
+		string weaponCopy[50];
+		int hitDie[20], hitDiecopy[20];
+		int Bolts = 0, Arrows = 0, Darts = 0, Needles = 0, Sling_Ammo = 0;
+		void statSetter(int pick1, int pick2, int pick3,
+						int pick4, int pick5, int pick6){
+			STR = pick1; DEX = pick2; CON = pick3;
+			INT = pick4; WIS = pick5; CHA = pick6;
+		}
+		void statGetter(){
+			cout << "Strength: " << STR << endl;
+			cout << "Dexterity: " << DEX << endl;
+			cout << "Constitution: " << CON << endl;
+			cout << "Intelligence: " << INT << endl;
+			cout << "Wisdom: " << WIS << endl;
+			cout << "Charisma: " << CHA << endl;
+		}
+		void modGetter(){
+			cout << "Strength Mod: " << STRmod << endl;
+			cout << "Dexterity Mod: " << DEXmod << endl;
+			cout << "Constitution Mod: " << CONmod << endl;
+			cout << "Intelligence Mod: " << INTmod << endl;
+			cout << "Wisdom Mod: " << WISmod << endl;
+			cout << "Charisma Mod: " << CHAmod << endl;
+
+		}
+		int strGet(){
+			return STR;
+		}
+		int dexGet(){
+			return DEX;
+		}
+		int conGet(){
+			return CON;
+		}
+		int intGet(){
+			return INT;
+		}
+		int wisGet(){
+			return WIS;
+		}
+		int chaGet(){
+			return CHA;
+		}
+		int strMODGet(){
+			return STRmod;
+		}
+		int dexMODGet(){
+			return DEXmod;
+		}
+		int conMODGet(){
+			return CONmod;
+		}
+		int intMODGet(){
+			return INTmod;
+		}
+		int wisMODGet(){
+			return WISmod;
+		}
+		int chaMODGet(){
+			return CHAmod;
+		}
+
+		void statUpdate(char aStat, int addStat){
+			switch(aStat){
+				case '1': STR += addStat; break;
+				case '2': DEX += addStat; break;
+				case '3': CON += addStat; break;
+				case '4': INT += addStat; break;
+				case '5': WIS += addStat; break;
+				case '6': CHA += addStat; break;
+			}
+		}
+
+		void modUpdate(int aMod, int setMod){
+			switch(aMod){
+				case 1: STRmod = setMod; break;
+				case 2: DEXmod = setMod; break;
+				case 3: CONmod = setMod; break;
+				case 4: INTmod = setMod; break;
+				case 5: WISmod = setMod; break;
+				case 6: CHAmod = setMod; break;
+			}
+		}
+
+		void namegenderSet(string aName, string aGender){
+			name = aName;
+			gender = aGender;
+		}
+		void namegenderGet(){
+			cout << "Your name is " << name;
+			cout << " and your gender is " << gender << "." << endl;
+		}
+		void playerclassSet(string aPlayerClass){
+			int x;
+			while(x < 13){
+				if(playerClass[x] == "0"){
+					playerClass[x] = aPlayerClass;
+					break;
+				}
+				x++;
+			}
+		}
+		void playerclassGet(){
+			cout << "Your classes are:" << endl;
+			for(int x = 0; x < 13; x++){
+				if (playerClass[x] != "0")
+					cout << "[" << x + 1 << "] - " << playerClass[x] << endl;
+			}
+		}
+		void HPAdd(int addHealth){
+			health += addHealth;
+		}
+		void HPSet(int aHelth){
+			health = aHelth;
+		}
+		int HPGet(){
+			return health;
+		}
+		void HPMaxSet(int aMax){
+			maxHP = aMax;
+		}
+		int HPMaxGet(){
+			return maxHP;
+		}
+		void HPCapSet(int aCap){
+			hpCap = aCap;
+		}
+		int HPCapGet(){
+			return hpCap;
+		}
+		void HPCapAdd(int aHP){
+			hpCap += aHP;
+		}
+		void profSet(int aProf){
+			prof = aProf;
+		}
+		int profGet(){
+			return prof;
+		}
+
+		void acSet(int aAC){
+			AC = aAC;
+		}
+		int acGet(){
+			return AC;
+		}
+		void acShield(int aShield){
+			AC += aShield;
+		}
+		void acChange(int add){
+			AC += add;
+		}
+		void armorSet(string aArmor){
+			armor = aArmor;
+		}
+		string armorGet(){
+			return armor;
+		}
+		void shieldSet(int aNum){
+			shield_act = aNum;
+		}
+		int shieldGet(){
+			return shield_act;
+		}
+		void speedSet(int aSpeed){
+			speed = aSpeed;
+		}
+		void speedChange(int bSpeed){
+			speed += bSpeed;
+		}
+		int speedGet(){
+			return speed;
+		}
+		void flySet(int aFly){
+			fly_speed = aFly;
+		}
+		int flyGet(){
+			return fly_speed;
+		}
+		void baseflySet(int bFly){
+			base_fly = bFly;
+		}
+		int baseflyGet(){
+			return base_fly;
+		}
+		void expSet(int aEXP){
+			exp += aEXP;
+		}
+		int expGet(){
+			return exp;
+		}
+		void recklessSet(int aReck){
+			reckless = aReck;
+		}
+		int recklessGet(){
+			return reckless;
+		}
+		void frenzySet(int aFrenzy){
+			frenzy = aFrenzy;
+		}
+		int frenzyGet(){
+			return frenzy;
+		}
+		void rageskipSet(int aSkip){
+			rage_skip = aSkip;
+		}
+		int rageskipGet(){
+			return rage_skip;
+		}
+		void frenzyskipSet(int aSkip){
+			frenzy_skip = aSkip;
+		}
+		int frenzyskipGet(){
+			return frenzy_skip;
+		}
+		void eakeySet(int aKey){
+			ea_key = aKey;
+		}
+		int eakeyGet(){
+			return ea_key;
+		}
+		void totemSet(int aNum, string aAnimal){
+			switch(aNum){
+				case 1:
+					totem1 = aAnimal; break;
+				case 2:
+					totem2 = aAnimal; break;
+				case 3:
+					totem3 = aAnimal; break;
+			}
+		}
+		string totem1Get(){
+			return totem1;
+		}
+		string totem2Get(){
+			return totem2;
+		}
+		string totem3Get(){
+			return totem3;
+		}
+
+		//Fighter Member Functions
+		void FstyleSet(string aStyle){
+			f_style = aStyle;
+		}
+		string FstyleGet(){
+			return f_style;
+		}
+		void FSsupdieSet(int aDie){
+			fs_sup_die = aDie;
+		}
+		int FSsupdieGet(){
+			return fs_sup_die;
+		}
+		void FSsupDCSet(int aDC){
+			fs_sup_DC = aDC;
+		}
+		int FSsupDCGet(){
+			return fs_sup_DC;
+		}
+		void maxsupdieSet(int aMax){
+			max_sup_die = aMax;
+		}
+		int maxsupdieGet(){
+			return max_sup_die;
+		}
+		void supdieSet(int aDie){
+			sup_die = aDie;
+		}
+		int supdieGet(){
+			return sup_die;
+		}
+		void supdieChange(int aDie){
+			sup_die += aDie;
+		}
+		void supDCSet(int aDC){
+			sup_DC = aDC;
+		}
+		int supDCGet(){
+			return sup_DC;
+		}
+		void sup_techSet(string tech){
+			s_tech = tech;
+		}
+		string sup_techGet(){
+			return s_tech;
+		}
+
+
+		void basespeedSet(int aBase){
+			base_speed = aBase;
+		}
+		int basespeedGet(){
+			return base_speed;
+		}
+		void blindSet(int TF){
+			blind = TF;
+		}
+		void charmedSet(int TF){
+			charmed = TF;
+		}
+		void deafSet(int TF){
+			deaf = TF;
+		}
+		void frightSet(int TF){
+			fright = TF;
+		}
+		void grappSet(int TF){
+			grapp = TF;
+		}
+		void incapSet(int TF){
+			incap = TF;
+		}
+		void invisSet(int TF){
+			invis = TF;
+		}
+		void paralSet(int TF){
+			paral = TF;
+		}
+		void petrifSet(int TF){
+			petrif = TF;
+		}
+		void poisonSet(int TF){
+			poison = TF;
+		}
+		void proneSet(int TF){
+			prone = TF;
+		}
+		void restraSet(int TF){
+			restra = TF;
+		}
+		void stunnedSet(int TF){
+			stunned = TF;
+		}
+		void unconsSet(int TF){
+			uncons = TF;
+		}
+		void exhaustSet(int TF){
+			exhaust = TF;
+		}
+		int blindGet(){
+			return blind;
+		}
+		int charmedGet(){
+			return charmed;
+		}
+		int deafGet(){
+			return deaf;
+		}
+		int frightGet(){
+			return fright;
+		}
+		int grappGet(){
+			return grapp;
+		}
+		int incapGet(){
+			return incap;
+		}
+		int invisGet(){
+			return invis;
+		}
+		int paralGet(){
+			return paral;
+		}
+		int petrifGet(){
+			return petrif;
+		}
+		int poisonGet(){
+			return poison;
+		}
+		int proneGet(){
+			return prone;
+		}
+		int restraGet(){
+			return restra;
+		}
+		int stunnedGet(){
+			return stunned;
+		}
+		int unconsGet(){
+			return uncons;
+		}
+		int exhaustGet(){
+			return exhaust;
+		}
+		void exhlevelSet(int aEXH){
+			exh_level += aEXH;
+		}
+		int exhlevelGet(){
+			return exh_level;
+		}
+
+};
+MyChar Character;
+
+
+void Weapon_Attack();
+void Unarmored_Defense();
+void Fast_Movement();
+void Totem_Spirit();
+
+
+
+int Superior_Ask(){
+	int setter = 0, FS, S, roll, skip = 0;
+	S = Character.supdieGet();
+	FS = Character.FSsupdieGet();
+	char asker;
+	cout << "Do you want to use a d6 [1] superiority die, a d8 [2], or none [3]: ";
+	do{
+		cin >> asker;
+		switch(asker){
+			case '1':
+				if(FS == 1){
+					roll = (rand() % 6) + 1;
+					cout << "You expended a d6!" << endl;
+					setter++;
+					Character.FSsupdieSet(0);
+				}
+				else
+					cout << "You do not have a d6 die available, please try again: ";
+				break;
+			case '2':
+				if(S >= 1){
+					roll = (rand() % 8) + 1;
+					cout << "You expended a d8!" << endl;
+					setter++;
+					Character.supdieChange(-1);
+				}
+				else
+					cout << "You do not have a d8 die available, please try again: ";
+				break;
+			case '3':
+				cout << "Understood." << endl;
+				setter++;
+				roll = 0;
+				break;
+			default:
+				cout << "Please try again: ";
+		}
+	}while(setter == 0);
+
+	return roll;
+}
+
+void Superior_Technique(){
+	string st_list[23] = {"Ambush", "Bait and Switch", "Brace", "Commander's Strike", "Commanding Presence",
+		"Disarming Attack", "Distracting Strike", "Evasive Footwork", "Feinting Attack", "Goading Attack",
+		"Grappling Strike", "Lunging Attack", "Maneuvering Attack", "Menacing Attack", "Parry",
+		"Precision Attack", "Pushing Attack", "Quick Toss", "Rally", "Riposte",
+		"Sweeping Attack", "Tactical Assessment", "Trip Attack"
+		};
+	for(int x = 0; x < 23; x++)
+		cout << "[" << x + 1 << "] - " << st_list[x] << endl;
+	int ask;
+	int setter = 0;
+	do{
+		cout << "Choose a superior technique: ";
+		cin >> ask;
+		if(ask > 0 && ask <= 23){
+			Character.sup_techSet(st_list[ask]);
+			cout << "You have gained the technique " << st_list[ask] << "!" << endl;
+			setter++;
+		}
+		else{
+			cout << "Please try again. ";
+		}
+	}while(setter == 0);
+/*
+Brace
+When a creature you can see moves into the reach you have with the melee weapon you're wielding, you can use your reaction to expend one superiority die and make one attack against the creature, using that weapon. If the attack hits, add the superiority die to the weapon's damage roll.
+
+Commander's Strike
+When you take the Attack action on your turn, you can forgo one of your attacks and use a bonus action to direct one of your companions to strike. When you do so, choose a friendly creature who can see or hear you and expend one superiority die. That creature can immediately use its reaction to make one weapon attack, adding the superiority die to the attack's damage roll.
+
+Commanding Presence
+When you make a Charisma (Intimidation), a Charisma (Performance), or a Charisma (Persuasion) check, you can expend one superiority die and add the superiority die to the ability check.
+
+Disarming Attack
+When you hit a creature with a weapon attack, you can expend one superiority die to attempt to disarm the target, forcing it to drop one item of your choice that it's holding. You add the superiority die to the attack's damage roll, and the target must make a Strength saving throw. On a failed save, it drops the object you choose. The object lands at its feet.
+
+Distracting Strike
+When you hit a creature with a weapon attack, you can expend one superiority die to distract the creature, giving your allies an opening. You add the superiority die to the attack's damage roll. The next attack roll against the target by an attacker other than you has advantage if the attack is made before the start of your next turn.
+
+Evasive Footwork
+When you move, you can expend one superiority die, rolling the die and adding the number rolled to your AC until you stop moving.
+
+Feinting Attack
+You can expend one superiority die and use a bonus action on your turn to feint, choosing one creature within 5 feet of you as your target. You have advantage on your next attack roll against that creature this turn. If that attack hits, add the superiority die to the attack's damage roll.
+
+Goading Attack
+When you hit a creature with a weapon attack, you can expend one superiority die to attempt to goad the target into attacking you. You add the superiority die to the attack's damage roll, and the target must make a Wisdom saving throw. On a failed save, the target has disadvantage on all attack rolls against targets other than you until the end of your next turn.
+
+Grappling Strike
+Immediately after you hit a creature with a melee attack on your turn, you can expend one superiority die and then try to grapple the target as a bonus action (see the Player's Handbook for rules on grappling). Add the superiority die to your Strength (Athletics) check.
+
+Lunging Attack
+When you make a melee weapon attack on your turn, you can expend one superiority die to increase your reach for that attack by 5 feet. If you hit, you add the superiority die to the attack's damage roll.
+
+Maneuvering Attack
+When you hit a creature with a weapon attack, you can expend one superiority die to maneuver one of your comrades into a more advantageous position. You add the superiority die to the attack's damage roll, and you choose a friendly creature who can see or hear you. That creature can use its reaction to move up to half its speed without provoking opportunity attacks from the target of your attack.
+
+Menacing Attack
+When you hit a creature with a weapon attack, you can expend one superiority die to attempt to frighten the target. You add the superiority die to the attack's damage roll, and the target must make a Wisdom saving throw. On a failed save, it is frightened of you until the end of your next turn.
+
+Parry
+When another creature damages you with a melee attack, you can use your reaction and expend one superiority die to reduce the damage by the number you roll on your superiority die + your Dexterity modifier.
+
+Precision Attack
+When you make a weapon attack roll against a creature, you can expend one superiority die to add it to the roll. You can use this maneuver before or after making the attack roll, but before any effects of the attack are applied.
+
+Pushing Attack
+When you hit a creature with a weapon attack, you can expend one superiority die to attempt to drive the target back. You add the superiority die to the attack's damage roll, and if the target is Large or smaller, it must make a Strength saving throw. On a failed save, you push the target up to 15 feet away from you.
+
+Quick Toss
+As a bonus action, you can expend one superiority die and make a ranged attack with a weapon that has the thrown property. You can draw the weapon as part of making this attack. If you hit, add the superiority die to the weapon's damage roll.
+
+Rally
+On your turn, you can use a bonus action and expend one superiority die to bolster the resolve of one of your companions. When you do so, choose a friendly creature who can see or hear you. That creature gains temporary hit points equal to the superiority die roll + your Charisma modifier.
+
+Riposte
+When a creature misses you with a melee attack, you can use your reaction and expend one superiority die to make a melee weapon attack against the creature. If you hit, you add the superiority die to the attack's damage roll.
+
+Sweeping Attack
+When you hit a creature with a melee weapon attack, you can expend one superiority die to attempt to damage another creature with the same attack. Choose another creature within 5 feet of the original target and within your reach. If the original attack roll would hit the second creature, it takes damage equal to the number you roll on your superiority die. The damage is of the same type dealt by the original attack.
+
+Tactical Assessment
+When you make an Intelligence (Investigation), an Intelligence (History), or a Wisdom (Insight) check, you can expend one superiority die and add the superiority die to the ability check.
+
+Trip Attack
+When you hit a creature with a weapon attack, you can expend one superiority die to attempt to knock the target down. You add the superiority die to the attack's damage roll, and if the target is Large or smaller, it must make a Strength saving throw. On a failed save, you knock the target prone.
+*/
+}
+
+void Fighting_Style(){
+	string fstyleList[11] = {"Archery", "Blind Fighting", "Defense", "Dueling",
+	"Great Weapon Fighting", "Interception", "Protection", "Superior Technique",
+	"Thrown Weapon Fighting", "Two-Weapon Fighting", "Unarmed Fighting"};
+	for(int v = 0; v < 11; v++)
+		cout << "[" << v + 1 << "] - " << fstyleList[v] << endl;
+
+	int setter = 0;
+	char fstyle;
+	string chosen;
+	cout << "Pick a fighting style: ";
+	do{
+		cin >> fstyle;
+		switch(fstyle){
+			case '1':
+				chosen = "Archery";
+				setter++;
+				break;
+			case '2':
+				chosen = "Blind Fighting";
+				setter++;
+				break;
+			case '3':
+				chosen = "Defense";
+				setter++;
+				break;
+			case '4':
+				chosen = "Dueling";
+				setter++;
+				break;
+			case '5':
+				chosen = "Great Weapon Fighting";
+				setter++;
+				break;
+			case '6':
+				chosen = "Interception";
+				setter++;
+				break;
+			case '7':
+				chosen = "Protection";
+				setter++;
+				break;
+			case '8':
+				chosen = "Superior Technique";
+				Superior_Technique();
+				setter++;
+				break;
+			case '9':
+				chosen = "Thrown Weapon Fighting";
+				setter++;
+				break;
+			case 'A': case 'a':
+				chosen = "Two Weapon Fighting";
+				setter++;
+				break;
+			case 'B': case 'b':
+				chosen = "Unarmed Fighting";
+				setter++;
+				break;
+			default:
+				cout << "Please pick again. ";
+		}
+	}while(setter == 0);
+/*	Superior Technique - You learn one maneuver of your choice from among those
+	available to the Battle Master archetype.
+
+	DC = 8 + Proficiency + (Strength or Dexterity);
+		○ You gain one superiority die, which is a d6 (this die is added to any
+		superiority dice you have from another source). This die is used to fuel
+		your maneuvers. A superiority die is expended when you use it.
+		You regain your expended superiority dice when you finish a short or long
+		rest.
+*/
+
+	Character.FstyleSet(chosen);
+	FeatureChecker(chosen);
+}
+
+void Fighter(){
+	if(Character.FighLevel == 1){
+		hitDieChecker(10);
+		FeatureChecker("Second Wind");
+		cout << "You have unlocked Second Wind and Fighting Style!" << endl;
+		BonusChecker("Second Wind");
+		FeatureChecker("Fighting Style");
+		Fighting_Style();
+		armorProfChecker("Light Armor");
+		armorProfChecker("Medium Armor");
+		armorProfChecker("Shield");
+		weapProfChecker("Simple Weapons");
+		weapProfChecker("Martial Weapons");
+		if(Character.TotalLevel > 1){
+			Character.HPCapAdd(6 + Character.conMODGet());
+			Character.HPMaxSet(Character.HPCapGet() * 2);
+			Character.HPSet(Character.HPCapGet());
+		}
+		if(Character.TotalLevel == 1){
+			SaveThrowChecker("Strength");
+			SaveThrowChecker("Constitution");
+			Character.HPSet(12 + Character.conMODGet());
+			Character.HPCapSet(12 + Character.conMODGet());
+			Character.HPMaxSet(Character.HPCapGet() * 2);
+			string FighStartingSkills[8] = {"Acrobatics", "Animal Handling", "Athletics",
+				"History", "Insight", "Intimidation", "Perception", "Survival"};
+			int StartingSkillsChecker[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+			int x = 0, pick;
+			for (int z = 0; z < 8; z++)
+				cout << "[" << z+1 << "] - " << FighStartingSkills[z] << endl;
+			while (x < 2){
+				int n = sizeof(StartingSkillsChecker)/sizeof(int);
+				cout << "Choose a skill: ";
+				cin >> pick;
+				bool exists = find(StartingSkillsChecker, StartingSkillsChecker + n, pick) != StartingSkillsChecker + n;
+				if (exists){
+					cout << "Not available, please choose another: ";
+					continue;
+				}
+				else{
+					StartingSkillsChecker[x] = pick;
+					int z = 0;
+					switch(pick){
+						case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8:
+						z = pick-1;
+						SkillChecker(FighStartingSkills[z]);
+						break;
+					default:
+						cout << "Not available, please choose another: ";
+						continue;
+					}
+					x++;
+				}
+			}
+
+			int setter1 = 0;
+			cout << "Do you want chain mail armor [A] or leather armor, a longbow, and 20 arrows [B]: ";
+			do{
+				char aorb;
+				cin >> aorb;
+				switch(aorb){
+					case 'A': case 'a':
+						Add_Armor_Caller("Chain Mail");
+						setter1++;
+						break;
+					case 'B': case 'b':
+						Add_Armor_Caller("Leather Armor");
+						Character.Arrows += 20;
+						Add_Weap_Caller("Longbow");
+						setter1++;
+						break;
+					default:
+						cout << "Please choose the right option. ";
+				}
+			}while (setter1 == 0);
+
+			int setter2 = 0;
+			cout << "Do you want a martial weapon and a shield [A] or two martial weapons [B]: ";
+			do{
+			int wpick1, wpick2;
+			char aorb;
+				cin >> aorb;
+				switch(aorb){
+					case 'A': case 'a':
+						Add_Armor_Caller("Shield");
+						for(int z = 0; z < 23; z++)
+							cout << "[" << z+1 << "] - " << MartialWeaponList[z] << endl;
+						cout << "What do you want to pick?";
+						cin >> wpick1;
+						if(wpick1 > 0 && wpick1 < 24){
+							Add_Weap_Caller(MartialWeaponList[wpick1-1]);
+							setter2++;
+						}
+						else{
+							cout << "Please choose the right option. ";
+						}
+						break;
+					case 'B': case 'b':
+						for(int z = 0; z < 23; z++)
+							cout << "[" << z+1 << "] - " << MartialWeaponList[z] << endl;
+						cout << "What do you want to pick: ";
+						cin >> wpick1;
+						if(wpick1 > 0 && wpick1 < 24){
+							cout << "Pick another one: ";
+							cin >> wpick2;
+							if(wpick2 > 0 && wpick2 < 24){
+								Add_Weap_Caller(MartialWeaponList[wpick1-1]);
+								Add_Weap_Caller(MartialWeaponList[wpick2-1]);
+								setter2++;
+							}
+							else{
+								cout << "Please start again and choose the right option. ";
+							}
+						}
+						else{
+							cout << "Please choose the right option. ";
+						}
+					default:
+						cout << "Please choose the right option. ";
+				}
+			}while (setter2 == 0);
+
+			int setter3 = 0;
+			cout << "Do you want a light crossbow with 20 bolts [A] or two handaxes [B]: ";
+			do{
+				char aorb;
+				cin >> aorb;
+				switch(aorb){
+					case 'A': case 'a':
+						Add_Weap_Caller("Light Crossbow");
+						Character.Bolts += 20;
+						setter3++;
+						break;
+					case 'B': case 'b':
+						Add_Weap_Caller("Handaxe");
+						Add_Weap_Caller("Handaxe");
+						setter3++;
+						break;
+					default:
+						cout << "Please choose the right option. ";
+				}
+			}while (setter3 == 0);
+
+			int setter4 = 0;
+			cout << "Do you want a dungeoneer's pack [A] or an explorer's pack [B]: ";
+			do{
+				char aorb;
+				cin >> aorb;
+				switch(aorb){
+					case 'A': case 'a':
+						Add_Item_Caller("Dungeoneer's Pack");
+						setter4++;
+						break;
+					case 'B': case 'b':
+						Add_Item_Caller("Explorer's Pack");
+						setter4++;
+						break;
+					default:
+						cout << "Please choose the right option. ";
+				}
+			}while (setter4 == 0);
+		}
+	}
+	else if(Character.BarbLevel == 2){
+		hitDieChecker(10);
+		Character.HPCapAdd(6 + Character.conMODGet());
+		Character.HPMaxSet(Character.HPCapGet() * 2);
+		Character.HPSet(Character.HPCapGet());
+		FeatureChecker("Reckless Attack");
+		BonusChecker("Reckless Attack");
+		FeatureChecker("Danger Sense");
+		cout << "You have unlocked Reckless Attack and Danger Sense" << endl;
+	}
+
+void RandomRoll(){
+	int pick;
+	int rand_stats[6];
+	cout << "Rolled Stats: ";
+	for (int x = 0; x < 6; x++)
+	{
+		rand_stats[x] = (rand() % 20) + 1;
+		cout << rand_stats[x];
+		if (x == 5)
+		{
+			break;
+		}
+		cout << ", ";
+	}
+	cout << endl;
+	cout << "[1] - Strength" << endl;
+	cout << "[2] - Dexterity" << endl;
+	cout << "[3] - Constitution" << endl;
+	cout << "[4] - Intelligence" << endl;
+	cout << "[5] - Wisdom" << endl;
+	cout << "[6] - Charisma" << endl;
+	int x = 0;
+	int n = sizeof(pick_checker)/sizeof(int);
+	while (x < 6)
+	{
+		cout << "Where do you want to put " << rand_stats[x] << ": ";
+		cin >> pick;
+		int *exists = find(pick_checker, pick_checker + n, pick);
+		if (exists != pick_checker + n)
+		{
+			cout << "Not available\n";
+			continue;
+		}
+		else
+		{
+			switch (pick)
+			{
+				case 1:
+					picks[0] = rand_stats[x];
+					break;
+				case 2:
+					picks[1] = rand_stats[x];
+					break;
+				case 3:
+					picks[2] = rand_stats[x];
+					break;
+				case 4:
+					picks[3] = rand_stats[x];
+					break;
+				case 5:
+					picks[4] = rand_stats[x];
+					break;
+				case 6:
+					picks[5] = rand_stats[x];
+					break;
+			}
+			pick_checker[x] = pick;
+			x++;
+		}
+	}
+}
+
+void Exhaust_Level(){
+
+}
+
+void Rage_Disable(){
+	Character.rageactiveSet(0);
+	if(Character.frenzyGet() == 1){
+		Character.frenzySet(0);
+		Character.exhaustSet(1);
+		Character.exhlevelSet(1);
+		cout << "You are now exhausted at level: " << Character.exhlevelGet() << endl;
+		Bonus_Remover("Frenzy Attack");
+	}
+	int mr_checker;
+	mr_checker = Feature_Finder("Mindless Rage");
+	if(mr_checker == 1){
+		Condition_Immunity_Remover("CharmedT");
+		Condition_Immunity_Remover("FrightenedT");
+		cout << "You can now be charmed or frightened!" << endl;
+	}
+	if(Character.totem1Get() == "Bear"){
+		Resistance_Remover("AcidT");
+		Resistance_Remover("BludgeoningT");
+		Resistance_Remover("ColdT");
+		Resistance_Remover("FireT");
+		Resistance_Remover("ForceT");
+		Resistance_Remover("LightningT");
+		Resistance_Remover("NecroticT");
+		Resistance_Remover("PiercingT");
+		Resistance_Remover("PoisonT");
+		Resistance_Remover("RadiantT");
+		Resistance_Remover("SlashingT");
+		Resistance_Remover("ThunderT");
+		cout << "You are not resistant to most damage now!" << endl;
+	}
+	else if(Character.totem1Get() == "Eagle"){
+		string a = Character.armorGet();
+		if(a != "Ring Mail" && a != "Chain Mail" && a != "Splint" && a != "Plate")
+			Bonus_Remover("Dash");
+	}
+	else if(Character.totem1Get() == "Elk"){
+		string a = Character.armorGet();
+		if(a != "Ring Mail" && a != "Chain Mail" && a != "Splint" && a != "Plate")
+			Character.speedChange(-15);
+	}
+	if(Character.totem3Get() == "Eagle"){
+		Character.flySet(Character.baseflyGet());
+	}
+	else if(Character.totem3Get() == "Elk"){
+		Bonus_Remover("Elk Move");
+	}
+	else if(Character.totem3Get() == "Wolf"){
+		Bonus_Remover("Wolf Move");
+	}
+
+}
+
+char Brute_Critical(){
+	char a, bc_ask;
+	int setter = 0, bc_die;
+	do{
+		cout << "Do you want to use a brutal critical die? [Y] or [N]: ";
+		cin >> bc_ask;
+		switch(bc_ask){
+			case 'Y': case 'y':
+				bc_die = Character.bruteDieGet();
+				Character.bruteDieSet(bc_die - 1);
+				setter++;
+				a = 'Y';
+				break;
+			case 'N': case 'n':
+				cout << "Understood";
+				setter++;
+				a = 'N';
+				break;
+			default: cout << "Please try again. ";
+			}
+	}while(setter == 0);
+
+	return a;
+}
+
+void Totem_Picker(int x){
+	int setter = 0;
+	char pick;
+	do{
+		cout << "Please choose a totem animal: ";
+		cin >> pick;
+		switch(pick){
+			case '1':
+				Character.totemSet(x, "Bear");
+				setter++;
+				break;
+			case '2':
+				Character.totemSet(x, "Eagle");
+				setter++;
+				break;
+			case '3':
+				Character.totemSet(x, "Elk");
+				setter++;
+				break;
+			case '4':
+				Character.totemSet(x, "Tiger");
+				setter++;
+				break;
+			case '5':
+				Character.totemSet(x, "Wolf");
+				setter++;
+				break;
+			default:
+				cout << "Please try again! " << endl;
+		}
+	}while(setter == 0);
+}
+
+void Totem_Spirit(){
+	string Totem_Animals[5] = {"Bear", "Eagle", "Elk", "Tiger", "Wolf"};
+	for(int v = 0; v < 5; v++){
+		cout << "[" << v + 1 << "] - " << Totem_Animals[v] << endl;
+	}
+	if(Character.BarbLevel == 3){
+		Totem_Picker(1);
+	}
+	else if(Character.BarbLevel == 6){
+		Totem_Picker(2);
+	}
+	else if(Character.BarbLevel == 14){
+		Totem_Picker(3);
+	}
+}
+
+void Cast_Spell(){
+	int x = 0, y = 1, setter = 0, v = 0;
+	cin.ignore(1,'\n');
+	string spell_pick;
+	while(x < 50){
+		if (Character.CharSpells[x] != "0"){
+			cout << y << ". " << Character.CharSpells[x] << endl;
+			y++;
+			x++;
+		}
+		else
+			x++;
+	}
+
+	while(setter == 0){
+		cout << "Choose spell: ";
+		getline(cin, spell_pick);
+		int temp = 0;
+		while(temp < 50){
+			if(Character.CharSpells[temp] == spell_pick){
+				setter++;
+				cout << "Successfully casted " << spell_pick;
+				break;
+				}
+			else
+				temp++;
+		}
+		}
+	}
+
+
+void Frenzy_Attack(){
+	cin.ignore(1,'\n');
+	Character.rageskipSet(1);
+	int x = 0, y = 1, setter = 0, w = 0;
+	int melee_check = 0, f_setter = 0;
+	string weappick;
+	while(x < 50){
+		if (Character.CharWeapons[x] != "0"){
+			cout << y << ". " << Character.CharWeapons[x] << endl;
+			y++;
+			x++;
+		}
+		else
+			x++;
+	}
+	do{
+	cout << "Choose your weapon: ";
+	getline(cin, weappick);
+	int temp = 0, found = 0;
+	while(temp < 50){
+		if(Character.CharWeapons[temp] == weappick){
+		found++;
+			for(w = 0; w < 28; w++){
+				if(MeleeWeaponList[w] == weappick)
+					melee_check++;
+			}
+		}
+		temp++;
+	}
+	cout << "MELEE: " << melee_check << endl;
+	cout << "Found: " << found << endl;
+	if(melee_check != 0){
+		Melee_Weapon_Rolls(weappick);
+		Character.rageskipSet(0);
+		f_setter++;
+		break;
+	}
+	if(found == 0){
+		cout << "Please choose a valid weapon." << endl;
+		continue;
+	}
+	}while(f_setter == 0);
+
+	if(Character.rageturnGet() == 0){
+		Rage_Disable();
+	}
+}
+
+int Tiger_Bonus(int previous){
+	int To_Return;
+	Character.totemSet(3, "Tiger");
+	if(previous >= 20 && Character.rageactiveGet() == 1 && Character.totem3Get() == "Tiger"){
+		int settert = 0;
+		char ask;
+		do{
+			cout << "Are you rushing in a straight line [Y] or [N]: ";
+			cin >> ask;
+			switch(ask){
+				case 'Y': case 'y':
+					cout << "You can attack the enemy for a bonus action!" << endl;
+					BonusChecker("Tiger Attack");
+					To_Return = 1;
+					settert++;
+					break;
+				case 'N': case 'n':
+					cout << "Understood." << endl;
+					To_Return = 0;
+					settert++;
+					break;
+				default:
+					cout << "Please try again. ";
+			}
+		}while(settert == 0);
+	}
+	else if(previous == -1){
+		Bonus_Remover("Tiger Attack");
+	}
+
+	return To_Return;
+}
+
+int Bait_Switch(int previous){
+	int FSsdie, sdie;
+	FSsdie = Character.FSsupdieGet();
+	sdie = Character.supdieGet();
+	cout << FSsdie << sdie << endl;
+	int die = 0;
+	int setter = 0;
+	char ask;
+	if(Character.sup_techGet() == "Bait and Switch" && previous >= 5 && (FSsdie >= 1 || sdie >= 1)){
+		do{
+			cout << "Do you have someone next to you? [Y] or [N]: ";
+			cin >> ask;
+			switch(ask){
+				case 'Y': case 'y':
+					cout << "You can use switch places with them!" << endl;
+					die = Superior_Ask();
+					setter++;
+					break;
+				case 'N': case 'n':
+					cout << "Understood" << endl;
+					die = 0;
+					setter++;
+					break;
+				default:
+					cout << "Please try again. ";
+			}
+		}while(setter == 0);
+	}
+
+	return die;
+}
+
+void Ranged_Weapon_Rolls(string weapon){
+	cout << "You picked a " << weapon << endl;
+	char adn, tyn;
+	int setter = 0, final_roll = 0, damage_roll = 0, nat_roll = 0;
+	int a, b, p, sMod, dMod, aMod, prof;
+	int prof_checker = 0, temp = 0;
+	int fin_checker = 0, temp1 = 0;
+	int twohand_check = 0, x = 0;
+	sMod = Character.strMODGet();
+	dMod = Character.dexMODGet();
+	prof = Character.profGet();
+
+	while(temp < 50){
+		if(Character.weaponProf[temp] == weapon){
+			final_roll += prof;
+			break;
+		}
+		else
+			temp++;
+	}
+	for(temp1 = 0; temp1 < 6; temp1++){
+		if(FinesseWeap[temp1] == weapon)
+			fin_checker++;
+		}
+	if(fin_checker == 1){
+		if(dMod > sMod)
+			aMod = dMod;
+		else
+			aMod = sMod;
+	}
+	else if(fin_checker == 0)
+		aMod = dMod;
+	final_roll += aMod;
+	damage_roll += aMod;
+
+	do{
+	cout << "Does your attack have advantage [1], disadvantage [2] or none [3]: " << endl;
+	cin >> adn;
+	switch(adn){
+		case '1':
+			a = (rand() % 20) + 1;
+			b = (rand() % 20) + 1;
+			if(a > b){
+				final_roll += a;
+				nat_roll = b;
+			}
+			else{
+				final_roll += b;
+				nat_roll = b;
+			}
+			setter++;
+			break;
+		case '2':
+			a = (rand() % 20) + 1;
+			b = (rand() % 20) + 1;
+			if(a < b){
+				final_roll += a;
+				nat_roll = b;
+			}
+			else{
+				final_roll += b;
+				nat_roll = b;
+			}
+			setter++;
+			break;
+		case '3':
+			nat_roll = (rand() % 20) + 1;
+			final_roll += nat_roll;
+			setter++;
+			break;
+		default:
+			cout << "Please pick a proper option." << endl;
+			continue;
+	}
+	}while(setter == 0);
+
+	cout << "You rolled a " << nat_roll << "!" << endl;
+	if(Character.FstyleGet() == "Archery")
+		final_roll += 2;
+	cout << "Your final roll is " << final_roll << "!" << endl;
+
+	if(weapon == "Light Crossbow"){
+		if(Character.Bolts <= 0)
+			cout << "You do not have any bolts unfortunately!" << endl;
+		else{
+			Character.Bolts -= 1;
+			if(nat_roll == 0)
+				cout << "Critical Fail!" << endl;
+			else{
+				damage_roll += (rand() % Light_Crossbow.weapDMGGet()) + 1;
+				if(nat_roll == 20){
+					cout << "Critical Hit!" << endl;
+					damage_roll += (rand() % Light_Crossbow.weapDMGGet()) + 1 + aMod;
+				}
+				cout << "Your " << Light_Crossbow.weapnameGet() << " did " << damage_roll;
+				cout << " hitpoints of " << Light_Crossbow.weapTypeGet() << " damage!" << endl;
+				}
+			}
+	}
+	else if(weapon == "Hand Crossbow"){
+		if(Character.Bolts <= 0)
+			cout << "You do not have any bolts unfortunately!" << endl;
+		else{
+			if(nat_roll == 0)
+				cout << "Critical Fail!" << endl;
+			else{
+				damage_roll += (rand() % Hand_Crossbow.weapDMGGet()) + 1;
+				if(nat_roll == 20){
+					cout << "Critical Hit!" << endl;
+					damage_roll += (rand() % Hand_Crossbow.weapDMGGet()) + 1 + aMod;
+				}
+			cout << "Your " << Hand_Crossbow.weapnameGet() << " did " << damage_roll;
+			cout << " hitpoints of " << Hand_Crossbow.weapTypeGet() << " damage!" << endl;
+				}
+			}
+	}
+	else if(weapon == "Heavy Crossbow"){
+		if(Character.Bolts <= 0)
+			cout << "You do not have any ammo unfortunately!" << endl;
+		else{
+			if(nat_roll == 0)
+				cout << "Critical Fail!" << endl;
+			else{
+				damage_roll += (rand() % Heavy_Crossbow.weapDMGGet()) + 1;
+				if(nat_roll == 20){
+					cout << "Critical Hit!" << endl;
+					damage_roll += (rand() % Heavy_Crossbow.weapDMGGet()) + 1 + aMod;
+				}
+				cout << "Your " << Heavy_Crossbow.weapnameGet() << " did " << damage_roll;
+				cout << " hitpoints of " << Heavy_Crossbow.weapTypeGet() << " damage!" << endl;
+				}
+			}
+	}
+	else if(weapon == "Dart"){
+		if(Character.Darts <= 0)
+
+			cout << "You do not have any ammo unfortunately!" << endl;
+		else{
+			if(nat_roll == 0)
+				cout << "Critical Fail!" << endl;
+			else{
+				damage_roll += (rand() % Dart.weapDMGGet()) + 1;
+				if(nat_roll == 20){
+					cout << "Critical Hit!" << endl;
+					damage_roll += (rand() % Dart.weapDMGGet()) + 1 + aMod;
+				}
+				cout << "Your " << Dart.weapnameGet() << " did " << damage_roll;
+				cout << " hitpoints of " << Dart.weapTypeGet() << " damage!" << endl;
+				}
+			}
+	}
+	else if(weapon == "Sling"){
+		if(Character.Sling_Ammo <= 0)
+			cout << "You do not have any ammo unfortunately!" << endl;
+		else{
+			if(nat_roll == 0)
+				cout << "Critical Fail!" << endl;
+			else{
+				damage_roll += (rand() % Sling.weapDMGGet()) + 1;
+				if(nat_roll == 20){
+					cout << "Critical Hit!" << endl;
+					damage_roll += (rand() % Sling.weapDMGGet()) + 1 + aMod;
+				}
+				cout << "Your " << Sling.weapnameGet() << " did " << damage_roll;
+				cout << " hitpoints of " << Sling.weapTypeGet() << " damage!" << endl;
+				}
+			}
+	}
+	else if(weapon == "Shortbow"){
+		if(Character.Arrows <= 0)
+			cout << "You do not have any ammo unfortunately!" << endl;
+		else{
+			if(nat_roll == 0)
+				cout << "Critical Fail!" << endl;
+			else{
+				damage_roll += (rand() % Shortbow.weapDMGGet()) + 1;
+				if(nat_roll == 20){
+					cout << "Critical Hit!" << endl;
+					damage_roll += (rand() % Shortbow.weapDMGGet()) + 1 + aMod;
+				}
+				cout << "Your " << Shortbow.weapnameGet() << " did " << damage_roll;
+				cout << " hitpoints of " << Shortbow.weapTypeGet() << " damage!" << endl;
+				}
+			}
+	}
+	else if(weapon == "Longbow"){
+		if(Character.Arrows <= 0)
+			cout << "You do not have any ammo unfortunately!" << endl;
+		else{
+			if(nat_roll == 0)
+				cout << "Critical Fail!" << endl;
+			else{
+				damage_roll += (rand() % Longbow.weapDMGGet()) + 1;
+				if(nat_roll == 20){
+					cout << "Critical Hit!" << endl;
+					damage_roll += (rand() % Longbow.weapDMGGet()) + 1 + aMod;
+				}
+				cout << "Your " << Longbow.weapnameGet() << " did " << damage_roll;
+				cout << " hitpoints of " << Longbow.weapTypeGet() << " damage!" << endl;
+				}
+			}
+	}
+	else if(weapon == "Blowgun"){
+		if(Character.Needles <= 0)
+			cout << "You do not have any ammo unfortunately!" << endl;
+		else{
+			if(nat_roll == 0)
+				cout << "Critical Fail!" << endl;
+			else{
+				damage_roll += (rand() % Blowgun.weapDMGGet()) + 1;
+				if(nat_roll == 20){
+					cout << "Critical Hit!" << endl;
+					damage_roll += (rand() % Blowgun.weapDMGGet()) + 1 + aMod;
+				}
+				cout << "Your " << Blowgun.weapnameGet() << " did " << damage_roll;
+				cout << " hitpoints of " << Blowgun.weapTypeGet() << " damage!" << endl;
+				}
+			}
+	}
+	else if(weapon == "Net"){
+		if(nat_roll == 0)
+			cout << "Critical Fail!" << endl;
+		else{
+			damage_roll = 0;
+			if(nat_roll == 20){
+				cout << "Critical Hit!" << endl;
+			}
+			cout << "Your " << Net.weapnameGet() << " did 0 hitpoints of damage!" << endl;
+			}
+		}
+}
+
+
+void Unarmored_Defense(){
+	int temp = 0, x = 0;
+	while (temp < 30){
+		if (Character.features[temp] == "Unarmored Defense"){
+			x++;
+			break;
+
+		}
+		else
+			temp++;
+	}
+	if(x == 1 && Character.armorGet() == "0"){
+		int new_AC = 10 + Character.dexMODGet() + Character.conMODGet();
+		Character.acSet(new_AC);
+		cout << "Armor Class: "<< Character.acGet() << endl;
+	}
+
+}
+
+void Fast_Movement(){
+	int ff;
+	ff = Feature_Finder("Fast Movement");
+	if(ff == 1){
+		if(Character.armorGet() != "Ring Mail" && Character.armorGet() != "Chain Mail" &&
+			Character.armorGet() != "Splint" && Character.armorGet() != "Plate"){
+				Character.speedChange(10);
+				cout << "Your speed has returned to normal and increased by 10!" << endl;
+				cout << "It is now " << Character.speedGet() << endl;
+			}
+		else{
+			cout << "Your speed has went back to normal!" << endl;
+			cout << "It is now " << Character.speedGet() << endl;
+		}
+	}
+}
+
+void Armor_Don(string armor){
+	if(armor == "Shield"){
+		Character.shieldSet(1);
+	}
+	else{
+		Character.armorSet(armor);
+	}
+
+	if(armor == "Padded Armor"){
+		Character.acSet(11 + Character.dexMODGet());
+	}
+	else if(armor == "Leather Armor"){
+		Character.acSet(11 + Character.dexMODGet());
+	}
+	else if(armor == "Studded Leather Armor"){
+		Character.acSet(12 + Character.dexMODGet());
+	}
+	else if(armor == "Hide Shirt"){
+		if(Character.dexMODGet() > 2)
+			Character.acSet(12 + 2);
+		else
+			Character.acSet(12 + Character.dexMODGet());
+	}
+	else if(armor == "Chain Shirt"){
+		if(Character.dexMODGet() > 2)
+			Character.acSet(13 + 2);
+		else
+			Character.acSet(13 + Character.dexMODGet());
+	}
+	else if(armor == "Scale Mail"){
+		if(Character.dexMODGet() > 2)
+			Character.acSet(14 + 2);
+		else
+			Character.acSet(14 + Character.dexMODGet());
+	}
+	else if(armor == "Breastplate"){
+		if(Character.dexMODGet() > 2)
+			Character.acSet(14 + 2);
+		else
+			Character.acSet(14 + Character.dexMODGet());
+	}
+	else if(armor == "Half Plate"){
+		if(Character.dexMODGet() > 2)
+			Character.acSet(15 + 2);
+		else
+			Character.acSet(15 + Character.dexMODGet());
+	}
+	else if(armor == "Ring Mail"){
+		Character.acSet(14);
+	}
+	else if(armor == "Chain Mail"){
+		Character.acSet(16);
+		if(Character.strGet() < 13){
+			Character.speedChange(-5);
+		};
+	}
+	else if(armor == "Splint"){
+		Character.acSet(17);
+		if(Character.strGet() < 15){
+			Character.speedChange(-5);
+		}
+	}
+	else if(armor == "Plate"){
+		Character.acSet(18);
+		if(Character.strGet() < 15){
+			Character.speedChange(-5);
+		}
+	}
+	else if(armor == "Shield"){
+		Character.acShield(2);
+	}
+	if(armor != "Shield" && Character.shieldGet() == 1){
+		Character.acSet(Character.acGet() + 2);
+	}
+
+	if(Character.totem1Get() == "Elk" && Character.rageactiveGet() == 1){
+		if(armor == "Ring Mail" && armor == "Chain Mail" && armor == "Splint" && armor == "Plate")
+			Character.speedChange(-15);
+	}
+
+	if(Character.FstyleGet() == "Defense")
+		Character.acSet(Character.acGet() + 1);
+
+	cout << "Your armor class is " << Character.acGet() << endl;
+	cout << "Your speed is " << Character.speedGet() << endl;
+	Fast_Movement();
+
+
+}
+
+void Shield_Wear(){
+	int x = 0, y = 1, v = 0;
+	cin.ignore(1,'\n');
+	char asker;
+	string armorpick;
+	if(Character.shieldGet() == 0){//This is if there is no armor
+		int setter = 0;
+		while(x < 15){
+			if (Character.CharArmor[x] == "Shield"){
+				y++;
+			}
+			x++;
+		}
+		if(y > 0){
+			do{
+				cout << "Do you want to wear your shield: ";
+				cin >> asker;
+				int temp = 0;
+				switch(asker){
+					case 'Y':
+						while(temp < 15){
+							if(Character.CharArmor[temp] == "Shield"){
+								setter++;
+								Armor_Don("Shield");
+								Character.CharArmor[temp] = "0";
+								break;
+							}
+							else
+								temp++;
+						}
+						break;
+					case 'N':
+						cout << "Understood";
+						setter++;
+						break;
+					default:
+						cout << "Please try again. ";
+					}
+			}while(setter == 0);
+		}
+	}
+	else{//This if if there is armor, undonning
+		char ayn;
+		int setter = 0, temp = 0, d_skip = 0;
+		cout << "Do you want to undon your shield? [Y] or [N]: ";
+		do{
+			cin >> ayn;
+			switch(ayn){
+				case 'Y': case 'y':
+					while (temp < 15){
+						if (Character.CharArmor[temp] == "0"){
+							d_skip++;
+							break;
+						}
+						else
+							temp++;
+					}
+					if(d_skip == 0 && temp == 15)
+						cout << "Too much armor, please discard first!" << endl;
+					else{
+						Character.CharArmor[temp] = "Shield";
+						cout << "Successfully removed shield." << endl;
+						Character.acSet(Character.acGet() - 2);
+						setter++;
+					}
+					break;
+				case 'N': case 'n':
+					cout << "Understood." << endl;
+					setter++;
+					break;
+				default:
+					cout << "Please choose the right option." << endl;
+					cout << "Do you want to undon your shield: Y or N ";
+			}
+		}while(setter == 0);
+	}
+}
+
+void Armor_Choose(){
+	int x = 0, y = 1, v = 0;
+	cin.ignore(1,'\n');
+	char asker;
+	string armorpick;
+	if(Character.armorGet() == "0"){//This is if there is no armor
+		int setter = 0;
+		while(x < 15){
+			if (Character.CharArmor[x] != "0" && Character.CharArmor[x] != "Shield"){
+				cout << y << ". " << Character.CharArmor[x] << endl;
+				y++;
+				x++;
+			}
+			else
+				x++;
+		}
+
+		do{
+		cout << "Choose armor to don: ";
+		getline(cin, armorpick);
+		int temp = 0;
+		while(temp < 15){
+			if(Character.CharArmor[temp] == armorpick){
+				setter++;
+				Armor_Don(armorpick);
+				Character.CharArmor[temp] = "0";
+				break;
+			}
+			else
+				temp++;
+		}
+		}while(setter == 0);
+	}
+	else{//This if if there is armor, undonning
+		char yn;
+		int findf = Feature_Finder("Unarmored Defense");
+		int setter = 0, temp = 0, d_skip = 0;
+		cout << "Do you want to undon " << Character.armorGet() << ": Y or N" << endl;
+		do{
+		cin >> yn;
+		switch(yn){
+			case 'Y': case 'y':
+				while (temp < 15){
+					if (Character.CharArmor[temp] == "0"){
+						d_skip++;
+						break;
+					}
+					temp++;
+				}
+				if(d_skip == 0 && temp == 15){
+					cout << "Too much armor, please discard first!" << endl;
+				}
+				else{
+					cout << "Successfully removed " << Character.armorGet() << ". " << endl;
+					if(Character.armorGet() == "Chain Mail"){
+						if(Character.strGet() < 13)
+							Character.speedChange(5);
+					}
+					else if(Character.armorGet() == "Splint" ||
+							Character.armorGet() == "Plate"){
+						if(Character.strGet() < 15)
+							Character.speedChange(5);
+					}
+					setter++;
+					if(Character.totem1Get() == "Elk" && Character.rageactiveGet() == 1){
+						string a = Character.armorGet();
+						if(a == "Ring Mail" && a == "Chain Mail" && a == "Splint" && a == "Plate")
+							Character.speedChange(15);
+					}
+
+					Character.CharArmor[temp] = Character.armorGet();
+					Character.armorSet("0");
+					Fast_Movement();
+
+
+					if(findf == 1)
+						Unarmored_Defense();
+					else
+						Character.acSet(10 + Character.dexMODGet());
+					if(Character.shieldGet() == 1)
+						Character.acShield(2);
+					if(Character.FstyleGet() == "Defense")
+						Character.acSet(Character.acGet() - 1);
+					cout << "Your current AC is: " << Character.acGet() << endl;
+				}
+
+				break;
+			case 'N': case 'n':
+				cout << "Understood." << endl;
+				setter++;
+				break;
+			default:
+				cout << "Please choose the right option." << endl;
+				cout << "Do you want to undon " << Character.armorGet() << ": Y or N" << endl;
+		}
+		}while(setter == 0);
+		}
+	}
+
+void Add_Armor(){
+	int armor, setter = 0, a;
+	int temp = 0;
+	cin.ignore(1,'\n');
+	for(int x = 0; x < 13; x++)
+		cout << x + 1 << ". " << ArmorList[x] << endl;
+	cout << "Hello, what armor would you like to add to your inventory: ";
+	do{
+	cin >> armor;
+	if (armor > 0 && armor <= 13){
+		a = armor - 1;
+		while (temp < 15){
+		if (Character.CharArmor[temp] == "0"){
+			Character.CharArmor[temp] = ArmorList[a];
+			cout << "Successfully added " << ArmorList[a] << "!" << endl;
+			setter += 1;
+			cout << setter << endl;
+			break;
+		}
+		else
+			temp++;
+		}
+		if(temp == 15){
+			cout << "Too much items, please discard!" << endl;
+		}
+	}
+	else{
+		cout << "Invalid item." << endl;
+		cout << "What would you like to add?" << endl;
+	}
+	}while(setter == 0);
+}
+
+void Add_Item(){
+	int item, setter = 0, a;
+	int temp = 0;
+	cin.ignore(1,'\n');
+	for(int x = 0; x < 13; x++)
+		cout << x + 1 << ". " << ItemList[x] << endl;
+	cout << "Hello, what item would you like to add to your inventory: ";
+	do{
+	cin >> item;
+	if (item > 0 && item <= 13){
+		a = item - 1;
+		while (temp < 100){
+		if (Character.CharEquipment[temp] == "0"){
+			Character.CharEquipment[temp] = ItemList[a];
+			cout << "Successfully added " << ItemList[a] << "!" << endl;
+			setter += 1;
+			cout << setter << endl;
+			break;
+		}
+		else
+			temp++;
+		}
+		if(temp == 100){
+			cout << "Too much items, please discard!" << endl;
+		}
+	}
+	else{
+		cout << "Invalid item." << endl;
+		cout << "What would you like to add?" << endl;
+	}
+	}while(setter == 0);
+}
+
+void Item_Discard(){
+	int check_if_empty = 99, checker = 0;
+	while(check_if_empty >= 0){
+		if(Character.CharEquipment[check_if_empty] == "0")
+			checker++;
+		check_if_empty--;
+	}
+	if(checker == 100)
+		cout << "You have no items!" << endl;
+	else{
+	int x = 0, y = 1, setter = 0, v = 0;
+	cin.ignore(1,'\n');
+	string itempick;
+	while(x < 50){
+		if (Character.CharEquipment[x] != "0"){
+			cout << y << ". " << Character.CharEquipment[x] << endl;
+			y++;
+			x++;
+		}
+		else
+			x++;
+	}
+
+	do{
+	cout << "Choose item to discard: ";
+	getline(cin, itempick);
+	int temp = 0;
+	while(temp < 50){
+		if(Character.CharEquipment[temp] == itempick){
+			setter++;
+	 		Character.CharEquipment[temp] = "0";
+			break;
+		}
+		else
+			temp++;
+	}
+	if(setter == 0)
+		cout << "That is not a valid item." << endl;
+	}while(setter == 0);
+	}
+}
+
+void Add_EXP(){
+	int add = 0, setter = 0;
+	do{
+	if(Character.TotalLevel == 20){
+		cout << "You have reached maximum level! You cannot add anymore!" << endl;
+		setter++;
+	}
+	else if(Character.TotalLevel == 1){
+		cout << 300 - Character.expGet() << " to level 2" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 300){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 2){
+		cout << 900 - Character.expGet() << " to level 3" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 900){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 3){
+		cout << 2700 - Character.expGet() << " to level 4" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 2700){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 4){
+		cout << 6500 - Character.expGet() << " to level 5" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 6500){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 5){
+		cout << 14000 - Character.expGet() << " to level 6" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 14000){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 6){
+		cout << 23000 - Character.expGet() << " to level 7" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 23000){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 7){
+		cout << 34000 - Character.expGet() << " to level 8" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 34000){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 8){
+		cout << 48000 - Character.expGet() << " to level 8" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 48000){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 9){
+		cout << 64000 - Character.expGet() << " to level 10" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 64000){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 10){
+		cout << 85000 - Character.expGet() << " to level 11" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 85000){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 11){
+		cout << 100000 - Character.expGet() << " to level 12" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 100000){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 12){
+		cout << 120000 - Character.expGet() << " to level 13" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 120000){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 13){
+		cout << 140000 - Character.expGet() << " to level 14" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 140000){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 14){
+		cout << 165000 - Character.expGet() << " to level 15" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 165000){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 15){
+		cout << 195000 - Character.expGet() << " to level 16" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 195000){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 16){
+		cout << 225000 - Character.expGet() << " to level 17" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 225000){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 17){
+		cout << 265000 - Character.expGet() << " to level 18" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 265000){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 18){
+		cout << 305000 - Character.expGet() << " to level 19" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 305000){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	else if(Character.TotalLevel == 19){
+		cout << 355000 - Character.expGet() << " to level 20" << endl;
+		cout << "Current EXP: " << Character.expGet() << endl;
+		cout << "How much exp would you like to add? ";
+		cin >> add;
+		if(Character.expGet() + add > 355000){
+			cout << "This value is too many" << endl;
+			continue;
+		}
+		else{
+			cout << "Successfully added " << add << " amount of exp!" << endl;
+			Character.expSet(add);
+			cout << "Current EXP: " << Character.expGet() << endl;
+			setter = 1;
+		}
+	}
+	}while(setter == 0);
+}
+
+void Level_Upper(){
+	char pick;
+	int setter = 0;
+	for(int x = 0; x <= 12; x++){
+		if(x < 9)
+			cout << "[" << x + 1 << "] - " << ClassList[x] << endl;
+		else{
+			if (x == 9)
+				cout << "[A] - " << ClassList[x] << endl;
+			else if (x == 10)
+				cout << "[B] - " << ClassList[x] << endl;
+			else if (x == 11)
+				cout << "[C] - " << ClassList[x] << endl;
+			else
+				cout << "[D] - " << ClassList[x] << endl;
+		}
+	}
+	cout << "Where would you like to level up: ";
+	cin >> pick;
+	do{
+	switch(pick){
+		case '1'://Artificer
+			if(Character.ArtiLevel == 0){
+				if(Character.intGet() >= 13){
+					Character.playerclassSet("Artificer");
+					cout << "You are now an artificer!";
+					Character.ArtiLevel += 1;
+					//Add Artificer void function.
+				}
+				else{
+					cout << "You cannot multiclass to Artificer!" << endl;
+					cout << "You need an intelligence of 13" << endl;
+					cout << "Current intelligence: " << Character.intGet();
+				}
+			}
+			else{
+				Character.ArtiLevel += 1;
+				cout << "You are now a level " << Character.ArtiLevel << " artificer." << endl;
+			}
+			setter++;
+			break;
+		case '2'://Barbarian
+			if(Character.BarbLevel == 0){
+				if(Character.strGet() >= 13){
+					Character.playerclassSet("Barbarian");
+					cout << "You are now a barbarian!";
+					Character.BarbLevel += 1;
+					//Add Barbarian void function.
+				}
+				else{
+					cout << "You cannot multiclass to Barbarian!" << endl;
+					cout << "You need a strength of 13" << endl;
+					cout << "Current strength: " << Character.strGet();
+				}
+			}
+			else{
+				Character.BarbLevel += 1;
+				cout << "You are now a level " << Character.BarbLevel << " barbarian." << endl;
+			}
+			setter++;
+			Barbarian();
+			break;
+		case '3'://Bard
+			if(Character.BardLevel == 0){
+				if(Character.chaGet() >= 13){
+					Character.playerclassSet("Bard");
+					cout << "You are now a bard!";
+					Character.BardLevel += 1;
+					//Add Bard void function.
+				}
+				else{
+					cout << "You cannot multiclass to Bard!" << endl;
+					cout << "You need a charisma of 13" << endl;
+					cout << "Current charisma: " << Character.chaGet();
+				}
+			}
+			else{
+				Character.BardLevel += 1;
+				cout << "You are now a level " << Character.BardLevel << " bard." << endl;
+			}
+			setter++;
+			break;
+		case '4'://Cleric
+			if(Character.ClerLevel == 0){
+				if(Character.wisGet() >= 13){
+					Character.playerclassSet("Cleric");
+					cout << "You are now an cleric!";
+					Character.ArtiLevel += 1;
+					//Add Artificer void function.
+				}
+				else{
+					cout << "You cannot multiclass to Cleric!" << endl;
+					cout << "You need an wisdom of 13" << endl;
+					cout << "Current wisdom:" << Character.wisGet();
+				}
+			}
+			else{
+				Character.ClerLevel += 1;
+				cout << "You are now a level " << Character.ClerLevel << " cleric." << endl;
+			}
+			setter++;
+			break;
+		case '5'://Druid
+			if(Character.DruiLevel == 0){
+				if(Character.wisGet() >= 13){
+					Character.playerclassSet("Druid");
+					cout << "You are now an druid!";
+					Character.DruiLevel += 1;
+					//Add Artificer void function.
+				}
+				else{
+					cout << "You cannot multiclass to Druid!" << endl;
+					cout << "You need an wisdom of 13" << endl;
+					cout << "Current wisdom:" << Character.wisGet();
+				}
+			}
+			else{
+				Character.DruiLevel += 1;
+				cout << "You are now a level " << Character.DruiLevel << " druid." << endl;
+			}
+			setter++;
+			break;
+		case '6'://Fighter
+			if(Character.FighLevel == 0){
+				if(Character.strGet() >= 13 || Character.dexGet() >= 13){
+					Character.playerclassSet("Fighter");
+					cout << "You are now an fighter!";
+					Character.FighLevel += 1;
+					Fighter();
+				}
+				else{
+					cout << "You cannot multiclass to Fighter!" << endl;
+					cout << "You need a strength or dexterity of 13" << endl;
+					cout << "Current strength:" << Character.strGet();
+					cout << "Current dexterity:" << Character.dexGet();
+				}
+			}
+			else{
+				Character.FighLevel += 1;
+				cout << "You are now a level " << Character.FighLevel << " fighter." << endl;
+			}
+			setter++;
+			break;
+		case '7'://Monk
+			if(Character.MonkLevel == 0){
+				if(Character.dexGet() >= 13 && Character.wisGet() >= 13){
+					Character.playerclassSet("Monk");
+					cout << "You are now an monk!";
+					Character.MonkLevel += 1;
+					//Add Artificer void function.
+				}
+				else{
+					cout << "You cannot multiclass to Monk!" << endl;
+					cout << "You need a dexterity and wisdom of 13" << endl;
+					cout << "Current strength:" << Character.dexGet();
+					cout << "Current dexterity:" << Character.wisGet();
+				}
+			}
+			else{
+				Character.MonkLevel += 1;
+				cout << "You are now a level " << Character.MonkLevel << " monk." << endl;
+			}
+			setter++;
+			break;
+		case '8'://Paladin
+			if(Character.PalaLevel == 0){
+				if(Character.strGet() >= 13 && Character.chaGet() >= 13){
+					Character.playerclassSet("Paladin");
+					cout << "You are now an paladin!";
+					Character.PalaLevel += 1;
+					//Add Artificer void function.
+				}
+				else{
+					cout << "You cannot multiclass to Paladin!" << endl;
+					cout << "You need a strength and charisma of 13" << endl;
+					cout << "Current strength:" << Character.strGet();
+					cout << "Current charisma:" << Character.chaGet();
+				}
+			}
+			else{
+				Character.PalaLevel += 1;
+				cout << "You are now a level " << Character.PalaLevel << " paladin." << endl;
+			}
+			setter++;
+			break;
+		case '9'://Ranger
+			if(Character.RangLevel == 0){
+				if(Character.dexGet() >= 13 && Character.wisGet() >= 13){
+					Character.playerclassSet("Ranger");
+					cout << "You are now an ranger!";
+					Character.RangLevel += 1;
+					//Add Ranger void function.
+				}
+				else{
+					cout << "You cannot multiclass to Ranger!" << endl;
+					cout << "You need a dexterity and wisdom of 13" << endl;
+					cout << "Current dexterity:" << Character.dexGet();
+					cout << "Current wisdom:" << Character.wisGet();
+				}
+			}
+			else{
+				Character.RangLevel += 1;
+				cout << "You are now a level " << Character.RangLevel << " ranger." << endl;
+			}
+			setter++;
+			break;
+		case 'A'://Rogue
+			if(Character.RoguLevel == 0){
+				if(Character.dexGet() >= 13){
+					Character.playerclassSet("Rogue");
+					cout << "You are now an rogue!";
+					Character.RoguLevel += 1;
+					//Add Artificer void function.
+				}
+				else{
+					cout << "You cannot multiclass to Rogue!" << endl;
+					cout << "You need an dexterity of 13" << endl;
+					cout << "Current dexterity:" << Character.dexGet();
+				}
+			}
+			else{
+				Character.RoguLevel += 1;
+				cout << "You are now a level " << Character.RoguLevel << " rogue." << endl;
+			}
+			setter++;
+			break;
+		case 'B'://Sorcerer
+			if(Character.SorcLevel == 0){
+				if(Character.chaGet() >= 13){
+					Character.playerclassSet("Sorcerer");
+					cout << "You are now an sorcerer!";
+					Character.SorcLevel += 1;
+					//Add Artificer void function.
+				}
+				else{
+					cout << "You cannot multiclass to Sorcerer!" << endl;
+					cout << "You need an charisma of 13" << endl;
+					cout << "Current charisma:" << Character.chaGet();
+				}
+			}
+			else{
+				Character.SorcLevel += 1;
+				cout << "You are now a level " << Character.SorcLevel << " sorcerer." << endl;
+			}
+			setter++;
+			break;
+		case 'C'://Warlock
+			if(Character.WarlLevel == 0){
+				if(Character.chaGet() >= 13){
+					Character.playerclassSet("Warlock");
+					cout << "You are now a warlock!";
+					Character.WarlLevel += 1;
+					//Add Artificer void function.
+				}
+				else{
+					cout << "You cannot multiclass to Warlock!" << endl;
+					cout << "You need an charisma of 13" << endl;
+					cout << "Current charisma:" << Character.chaGet();
+				}
+			}
+			else{
+				Character.WarlLevel += 1;
+				cout << "You are now a level " << Character.WarlLevel << " warlock." << endl;
+			}
+			setter++;
+			break;
+		case 'D'://Wizard
+			if(Character.WizaLevel == 0){
+				if(Character.intGet() >= 13){
+					Character.playerclassSet("Wizard");
+					cout << "You are now an wizard!";
+					Character.WizaLevel += 1;
+					//Add Wizard void function.
+				}
+				else{
+					cout << "You cannot multiclass to Wizard!" << endl;
+					cout << "You need an intelligence of 13" << endl;
+					cout << "Current intelligence:" << Character.intGet();
+				}
+			}
+			else{
+				Character.WizaLevel += 1;
+				cout << "You are now a level " << Character.WizaLevel << " wizard." << endl;
+			}
+			setter++;
+			break;
+		default:
+			cout << "That is not a valid input." << endl;
+			continue;
+	}
+	}while(setter == 0);
+}
+
+void Level_Checker(){
+	if(Character.expGet() == 300 && Character.TotalLevel != 2){
+		Character.TotalLevel = 2;
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 900 && Character.TotalLevel != 3){
+		Character.TotalLevel = 3;
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 2700 && Character.TotalLevel != 4){
+		Character.TotalLevel = 4;
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 6500 && Character.TotalLevel != 5){
+		Character.TotalLevel = 5;
+		Character.profSet(3);
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 14000 && Character.TotalLevel != 6){
+		Character.TotalLevel = 6;
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 23000 && Character.TotalLevel != 7){
+		Character.TotalLevel = 7;
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 34000 && Character.TotalLevel != 8){
+		Character.TotalLevel = 8;
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 48000 && Character.TotalLevel != 9){
+		Character.TotalLevel = 9;
+		Character.profSet(4);
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 64000 && Character.TotalLevel != 10){
+		Character.TotalLevel = 10;
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 85000 && Character.TotalLevel != 11){
+		Character.TotalLevel = 11;
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 100000 && Character.TotalLevel != 12){
+		Character.TotalLevel = 12;
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 120000 && Character.TotalLevel != 13){
+		Character.TotalLevel = 13;
+		Character.profSet(5);
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 140000 && Character.TotalLevel != 14){
+		Character.TotalLevel = 14;
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 165000 && Character.TotalLevel != 15){
+		Character.TotalLevel = 15;
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 195000 && Character.TotalLevel != 16){
+		Character.TotalLevel = 16;
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 225000 && Character.TotalLevel != 17){
+		Character.TotalLevel = 17;
+		Character.profSet(6);
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 265000 && Character.TotalLevel != 18){
+		Character.TotalLevel = 18;
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.expGet() == 305000 && Character.TotalLevel != 19){
+		Character.TotalLevel = 19;
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+	else if(Character.TotalLevel == 20){
+		cout << "";
+	}
+	else if(Character.expGet() == 355000 && Character.TotalLevel != 20){
+		Character.TotalLevel = 20;
+		cout << "Congratulations, you are now level " << Character.TotalLevel << "!" << endl;
+		Level_Upper();
+	}
+}
+
+void Bonus_Actions(string Bonus){
+	if(Bonus == "Rage"){
+			if(frenzy_checker == 1){
+				do{
+					cout << "Do you want to frenzy? [Y] or [N]: ";
+					cin >> frenzy_TF;
+					switch(frenzy_TF){
+						case 'Y': case 'y':
+							Character.frenzySet(1);
+							BonusChecker("Frenzy Attack");
+							fsetter++;
+							break;
+						case 'N': case 'n':
+							fsetter++;
+							break;
+						default:
+							cout << "Please try again." << endl;
+					}
+				}while(fsetter == 0);
+			}
+			int mr_checker;
+			mr_checker = Feature_Finder("Mindless Rage");
+			if(mr_checker == 1){
+				ConditionImmunityChecker("CharmedT");
+				ConditionImmunityChecker("FrightenedT");
+				cout << "You cannot be temporariliry charmed nor frightened!" << endl;
+			}
+			if(Character.totem1Get() == "Bear"){
+				ResistanceChecker("AcidT");
+				ResistanceChecker("BludgeoningT");
+				ResistanceChecker("ColdT");
+				ResistanceChecker("FireT");
+				ResistanceChecker("ForceT");
+				ResistanceChecker("LightningT");
+				ResistanceChecker("NecroticT");
+				ResistanceChecker("PiercingT");
+				ResistanceChecker("PoisonT");
+				ResistanceChecker("RadiantT");
+				ResistanceChecker("SlashingT");
+				ResistanceChecker("ThunderT");
+				cout << "You are resistant to all except for Psychic!" << endl;
+			}
+			else if(Character.totem1Get() == "Eagle"){
+				string a = Character.armorGet();
+				if(a != "Ring Mail" && a != "Chain Mail" && a != "Splint" && a != "Plate"){
+					BonusChecker("Dash");
+					cout << "You can now dash as a bonus attack!" << endl;
+				}
+			}
+			else if(Character.totem1Get() == "Elk"){
+				string a = Character.armorGet();
+				if(a != "Ring Mail" && a != "Chain Mail" && a != "Splint" && a != "Plate"){
+					Character.speedChange(15);
+				}
+			}
+			if(Character.totem3Get() == "Eagle"){
+				int a = Character.flyGet() + Character.speedGet();
+				Character.flySet(a);
+			}
+			else if(Character.totem3Get() == "Elk"){
+				BonusChecker("Elk Move");
+			}
+			else if(Character.totem3Get() == "Wolf"){
+				BonusChecker("Wolf Move");
+			}
+		}
+	}
+	else if(Bonus == "Reckless Attack"){
+		cout << "You have gained advantage on your next melee attack!" << endl;
+		Character.recklessSet(1);
+	}
+	else if(Bonus == "Frenzy Attack"){
+		cout << "You are going to attack with frenzy!" << endl;
+		Frenzy_Attack();
+	}
+	else if(Bonus == "Dash"){
+		cout << "You dashed an extra " << Character.speedGet() << "!" << endl;
+	}
+	else if(Bonus == "Elk Move"){
+		int a = Character.strMODGet() + Character.profGet() + 8;
+		int setter = 0, succeed = 0;
+		char ask;
+		do{
+			cout << "Your opponent must succeed to roll " << a << "." << endl;
+			cout << "Did they succeed? [Y] or [N]: ";
+			cin >> ask;
+			switch(ask){
+				case 'Y': case 'y':
+					cout << "Understood" << endl;
+					setter++;
+					break;
+				case 'N': case 'n':
+					setter++;
+					succeed++;
+					break;
+				default:
+					cout << "Please try again. ";
+			}
+		}while(setter == 0);
+
+		if(succeed == 1){
+			int dmg = 0;
+			dmg += (rand() % 12) + 1;
+			dmg += Character.strMODGet();
+			cout << "You dealt " << dmg << " hit points of bludgeoning damage!" << endl;
+		}
+	}
+	else if(Bonus == "Wolf Move"){
+		int setter = 0;
+		char ask;
+		do{
+			cout << "Is your opponent a large or smaller enemy? [Y] or [N]: ";
+			cin >> ask;
+			switch(ask){
+				case 'Y': case 'y':
+					cout << "You have knocked the enemy prone!" << endl;
+					setter++;
+					break;
+				case 'N': case 'n':
+					cout << "You have failed to knock your enemy down!" << endl;
+					setter++;
+					break;
+				default:
+					cout << "Please try again. ";
+			}
+		}while(setter == 0);
+	}
+	else if(Bonus == "Tiger Attack"){
+		Character.rageskipSet(1);
+		Weapon_Attack();
+		Character.rageskipSet(0);
+	}
+}
+
+void Bonus_Actions_Choose(){
+	int x = 0, setter = 0;
+	string pick;
+	cin.ignore(1,'\n');
+	while(x < 25){
+		if(Character.bonusActions[x] != "0")
+			cout << x + 1 << ". " << Character.bonusActions[x] << endl;
+		x++;
+	}
+	do{
+		cout << "Choose a bonus action: ";
+		getline(cin, pick);
+		int temp = 0;
+		while(temp < 25){
+			if(Character.bonusActions[temp] == pick){
+				setter++;
+				Bonus_Actions(pick);
+				break;
+			}
+		else
+			temp++;
+		}
+	}while(setter == 0);
+}
+
+void Reactions(string Reaction){
+
+}
+void Reactions_Choose(){
+}
+
+void Skill_Check(int skip, char stat){
+	int setter = 0, ask_setter = 0;
+	int a, b, prof, final_roll = 0, nat_roll = 0;
+	char pick;
+	string skill;
+	int ask_skip = 0, advdis = 0;
+	int initial_skip = skip;
+	if(initial_skip == 0){
+		cout << "[1] - Athletics" << endl;
+		cout << "[2] - Acrobatics" << endl;
+		cout << "[3] - Sleight of Hand" << endl;
+		cout << "[4] - Stealth" << endl;
+		cout << "[5] - Arcana" << endl;
+		cout << "[6] - History" << endl;
+		cout << "[7] - Investigation" << endl;
+		cout << "[8] - Nature" << endl;
+		cout << "[9] - Religion" << endl;
+		cout << "[A] - Animal Handling" << endl;
+		cout << "[B] - Insight" << endl;
+		cout << "[C] - Medicine" << endl;
+		cout << "[D] - Perception" << endl;
+		cout << "[E] - Survival" << endl;
+		cout << "[F] - Deception" << endl;
+		cout << "[G] - Intimidation" << endl;
+		cout << "[H] - Performance" << endl;
+		cout << "[I] - Persuasion" << endl;
+		do{
+			cout << "Choose the stat you want to roll for: ";
+			cin >> pick;
+			switch(pick){
+				case '1': skill = "Athletics"; setter++; break;
+				case '2': skill = "Acrobatics"; setter++; break;
+				case '3': skill = "Sleight of Hand"; setter++; break;
+				case '4': skill = "Stealth"; setter++; break;
+				case '5': skill = "Arcana"; setter++; break;
+				case '6': skill = "History"; setter++; break;
+				case '7': skill = "Investigation";  setter++; break;
+				case '8': skill = "Nature"; setter++; break;
+				case '9': skill = "Religion"; setter++; break;
+				case 'A': skill = "Animal Handling"; setter++; break;
+				case 'B': skill = "Insight"; setter++; break;
+				case 'C': skill = "Medicine"; setter++; break;
+				case 'D': skill = "Perception"; setter++; break;
+				case 'E': skill = "Survival"; setter++; break;
+				case 'F': skill = "Deception"; setter++; break;
+				case 'G': skill = "Intimidation"; setter++; break;
+				case 'H': skill = "Performance"; setter++; break;
+				case 'I': skill = "Persuasion"; setter++; break;
+			}
+		}while(setter == 0);
+	}
+	else if(stat == '2'){
+		skill = "Acrobatics";
+	}
+	else if(stat == '1'){
+		skill = "Athletics";
+	}
+
+	if(skill == "Athletics" && Character.totem2Get() == "Bear"){//Bear
+		char bearask;
+		int bear_set = 0;
+		do{
+			cout << "Are you trying to move an objects? [Y] or [N]: ";
+			cin >> bearask;
+			switch(bearask){
+				case 'Y': case 'y':
+					bear_set++;
+					cout << "You will gain advantage!" << endl;
+					advdis = 1;
+					ask_skip++;
+					break;
+				case 'N': case 'n':
+					bear_set++;
+					cout << "Understood";
+					break;
+				default:
+					cout << "Please try again. ";
+			}
+		}while(bear_set == 0);
+	}
+
+	prof = Skill_Finder(skill);
+	if(prof == 1)
+		final_roll += Character.profGet();
+
+	if(ask_skip == 0){
+		char asker;
+		int ask_setter = 0;
+		do{
+			cout << "Do you have advantage [1], disadvantage [2], or none [0]: ";
+			cin >> asker;
+			switch(asker){
+				case '1': advdis = 1; ask_setter++; break;
+				case '2': advdis = 2; ask_setter++; break;
+				case '0': advdis = 0; ask_setter++; break;
+				default:
+					cout << "Please try again. ";
+			}
+		}while(ask_setter == 0);
+	}
+
+
+	switch(advdis){
+		case 1://Advantage
+			a = (rand() % 20) + 1;
+			b = (rand() % 20) + 1;
+			if(a > b){
+				final_roll += a;
+				nat_roll = a;
+			}
+			else{
+				final_roll += b;
+				nat_roll = b;
+			}
+			cout << "You rolled an " << a << " and " << b << endl;
+			ask_setter++;
+			break;
+		case 2://Disadvantage
+			a = (rand() % 20) + 1;
+			b = (rand() % 20) + 1;
+			if(a < b){
+				final_roll += a;
+				nat_roll = a;
+			}
+			else{
+				final_roll += b;
+				nat_roll = b;
+				cout << "You rolled an " << a << " and " << b << endl;
+			}
+			ask_setter++;
+			break;
+		case 0://None
+			nat_roll = (rand() % 20) + 1;
+			final_roll += nat_roll;
+			ask_setter++;
+			break;
+	}
+
+	switch(pick){
+		case '1':
+			final_roll += Character.strMODGet(); break;
+		case '2': case '3': case '4':
+			final_roll += Character.dexMODGet(); break;
+		case '5': case '6': case '7': case '8': case '9':
+			final_roll += Character.intMODGet(); break;
+		case 'A': case 'B': case 'C': case 'D': case 'E':
+			final_roll += Character.wisMODGet(); break;
+		case 'F': case 'G': case 'H': case 'I':
+			final_roll += Character.chaMODGet(); break;
+	}
+
+	cout << "Your final roll is: " << nat_roll << endl;
+	int FSsdie, sdie, Sresult;
+	FSsdie = Character.FSsupdieGet();
+	sdie = Character.supdieGet();
+	if(skill == "Stealth" && (FSsdie == 1 || sdie >= 1) && Character.incapGet() == 0){
+		Sresult = Superior_Ask();
+		final_roll += Sresult;
+		if(Sresult != 0)
+			cout << "You roll " << Sresult << " more higher!" << endl;
+	}
+
+	cout << "Your " << skill << " check roll is: " << final_roll << endl;
+}
+
+void Save_Throws(){
+	char stat;
+	int a, b;
+	int stat_setter = 0, prof = 0;
+	int ds_check = 0, ds_skip = 0;
+	int im_check = 0;
+	int advdis = 0, final_roll = 0, nat_roll = 0, ask_skip = 0, ask_setter = 0;
+	cout << "[1] - Strength" << endl;
+	cout << "[2] - Dexterity" << endl;
+	cout << "[3] - Constitution" << endl;
+	cout << "[4] - Intelligence" << endl;
+	cout << "[5] - Wisdom" << endl;
+	cout << "[6] - Charisma" << endl;
+	do{
+		cout << "Choose a save throw: ";
+		cin >> stat;
+		switch(stat){
+			case '1':
+				prof = Saving_Throw_Finder("Strength");
+				stat_setter++;
+				break;
+			case '2':
+				prof = Saving_Throw_Finder("Dexterity");
+				stat_setter++;
+				break;
+			case '3':
+				prof = Saving_Throw_Finder("Constitution");
+				stat_setter++;
+				break;
+			case '4':
+				prof = Saving_Throw_Finder("Intelligence");
+				stat_setter++;
+				break;
+			case '5':
+				prof = Saving_Throw_Finder("Wisdom");
+				stat_setter++;
+				break;
+			case '6':
+				prof = Saving_Throw_Finder("Charisma");
+				stat_setter++;
+				break;
+			default:
+				cout << "Please choose a proper save throw." << endl;
+		}
+	}while(stat_setter == 0);
+
+	if(prof == 1)
+		final_roll += Character.profGet();
+
+	im_check = Feature_Finder("Indomitable Might");
+	ds_check = Feature_Finder("Danger Sense");
+	while(ds_skip == 0){
+		if(stat == '2' && ds_check == 1 && (Character.blindGet() == 0 || Character.deafGet() == 0 || Character.incapGet() == 0)){
+			if(Character.exhlevelGet() >= 1)
+				advdis = 0;
+			else
+				advdis = 1;
+			ds_skip++;
+			ask_skip = 1;
+		}
+		else
+			ds_skip++;
+	}
+
+	if(Character.exhaustGet() >= 1){
+		advdis = 2;
+		ask_skip = 1;
+	}
+
+	if(ask_skip == 0){
+		do{
+			cout << "Do you have advantage [1], disadvantage [2], or none [0]: ";
+			cin >> advdis;
+			switch(advdis){
+				case 1://Advantage
+					a = (rand() % 20) + 1;
+					b = (rand() % 20) + 1;
+					if(a > b){
+						final_roll += a;
+						nat_roll = a;
+					}
+					else{
+						final_roll += b;
+						nat_roll = b;
+					}
+					cout << "You rolled an " << a << " and " << b << endl;
+					ask_setter++;
+					break;
+				case 2://Disadvantage
+					a = (rand() % 20) + 1;
+					b = (rand() % 20) + 1;
+					if(a < b){
+						final_roll += a;
+						nat_roll = a;
+					}
+					else{
+						final_roll += b;
+						nat_roll = b;
+					cout << "You rolled an " << a << " and " << b << endl;
+					}
+					ask_setter++;
+					break;
+				case 0://None
+					nat_roll = (rand() % 20) + 1;
+					final_roll += nat_roll;
+					ask_setter++;
+					break;
+				default:
+					cout << "Please try again." << endl;
+			}
+		}while(ask_setter == 0);
+	}
+	cout << "Your final roll is: " << nat_roll << endl;
+	switch(stat){
+		case '1':
+			if(im_check == 1 && (final_roll < Character.strGet()))
+				final_roll = Character.strGet();
+			cout << "Your Strength saving throw is: " << final_roll << endl;
+			break;
+		case '2':
+			cout << "Your Dexterity saving throw is: " << final_roll << endl;
+			break;
+		case '3':
+			cout << "Your Constitution saving throw is: " << final_roll << endl;
+			break;
+		case '4':
+			cout << "Your Intelligence saving throw is: " << final_roll << endl;
+			break;
+		case '5':
+			cout << "Your Wisdom saving throw is: " << final_roll << endl;
+			break;
+		case '6':
+			cout << "Your Charisma saving throw is: " << final_roll << endl;
+			break;
+	}
+}
+
+void Roll_Initiative(){
+	int a, b, final_roll = 0, nat_roll = 0, setter = 0;
+	int fi, ask = 1;
+	char advdis, adn;
+	fi = Feature_Finder("Feral Instinct");
+	if(fi == 1){
+		cout << "You have Feral Instinct, you will have advantage!" << endl;
+		advdis = '1';
+		ask = 0;
+	}
+
+	if(ask == 1){
+		do{
+			cout << "Do you have advantage [1], disadvantage [2], or none [3]: ";
+			cin >> adn;
+			switch(adn){
+				case '1': case '2': case '3':
+					setter++;
+					advdis = adn;
+					break;
+				default:
+					cout << "Please enter a proper option." << endl;
+			}
+		}while(setter == 0);
+	}
+
+	switch(advdis){
+		case '1'://Advantage
+			a = (rand() % 20) + 1;
+			b = (rand() % 20) + 1;
+			if(a > b){
+				final_roll += a;
+				nat_roll = a;
+			}
+			else{
+				final_roll += b;
+				nat_roll = b;
+			}
+			cout << "You rolled an " << a << " and " << b << endl;
+			break;
+		case '2'://Disadvantage
+			a = (rand() % 20) + 1;
+			b = (rand() % 20) + 1;
+			if(a < b){
+				final_roll += a;
+				nat_roll = a;
+			}
+			else{
+				final_roll += b;
+				nat_roll = b;
+			cout << "You rolled an " << a << " and " << b << endl;
+			}
+			break;
+		case '3'://None
+			nat_roll = (rand() % 20) + 1;
+			final_roll += nat_roll;
+			break;
+	}
+
+	cout << "You rolled a " << nat_roll << endl;
+
+	int FSsdie, sdie, Sresult;
+	FSsdie = Character.FSsupdieGet();
+	sdie = Character.supdieGet();
+	cout << FSsdie << sdie << endl;
+	if((FSsdie == 1 || sdie >= 1) && Character.incapGet() == 0){
+		Sresult = Superior_Ask();
+		final_roll += Sresult;
+		if(Sresult != 0)
+			cout << "You roll " << Sresult << " more higher!" << endl;
+	}
+
+	cout << "Your final initiative roll is " << final_roll << endl;
+
+}
+
+void Short_Rest(){
+	int x = 0, y = 1, z = 0, v = 0;
+	int hd_num, hd_pick, setter = 0;
+	int hd_used[20];
+	for(x = 0; x < 20; x++){
+		if(Character.hitDie[x] != 0){
+			cout << y << ". " << Character.hitDie[x] << endl;
+			y++;
+			z++;
+		}
+	}
+	do{
+		cout << "How many hit die do you want to use: ";
+		cin >> hd_num;
+		if(hd_num > z){
+			cout << "You can't roll that many." << endl;
+			continue;
+		}
+		else{
+			while(hd_num > v){
+				cout << "Choose a die: ";
+				cin >> hd_pick;
+				int temp = 0;
+				while(temp < 20){
+					if(Character.hitDie[temp] == hd_pick){
+						Character.hitDie[temp] = 0;
+						hd_used[v] = hd_pick;
+						v++;
+						break;
+					}
+					else{
+						temp++;
+					}
+				}
+				if(v > 20)
+					cout << "Please try again. ";
+				if(hd_num == v)
+					setter++;
+			}
+		}
+	}while(setter == 0);
+
+	int total = 0;
+	for(int temp1 = 0; temp1 < hd_num; temp1++)
+		total += (rand() % hd_used[temp1]) + 1;
+
+	cout << "You have been healed " << total << " total hit points!" << endl;
+	if((Character.HPGet() + total) > Character.HPCapGet())
+		Character.HPSet(Character.HPCapGet());
+	else
+		Character.HPAdd(total);
+	cout << "Total Health: " << Character.HPGet() << endl;
+
+	//FEATURE FINDER TO REFILL SUPERIORITY DICE.
+}
+
+void Long_Rest(){
+	Character.HPSet(Character.HPCapGet());
+	for(int x = 0; x < 20; x++){
+		Character.hitDie[x] = Character.hitDiecopy[x];
+	}
+	cout << "You are now back to " << Character.HPCapGet() << " hit points!" << endl;
+	rr_DC = rr_Max;
+}
+
+void Death_Roll(){
+	int Death_Rolls[5];
+	int a;
+	int success = 0, failure = 0;
+	for(int v = 0; v < 5; v++){
+		a = (rand() % 20) + 1;
+		Death_Rolls[v] = a;
+		cout << v + 1 << ". " << Death_Rolls[v] << endl;
+		if(a < 10){
+			failure++;
+			if(failure == 3){
+				cout << "You have failed 3 times! You have died." << endl;
+				break;
+			}
+		}
+		else{
+			success++;
+			if(success == 3){
+				cout << "You have succeeded 3 times! You are back to life!" << endl;
+				Character.HPAdd(1);
+				break;
+			}
+		}
+	}
+}
+
+void Take_Damage(){
+	int dmg, setter = 0, res = 0, imm = 0, tres = 0, timm = 0;
+	char dmg_type_pick;
+	string dmg_type;
+	int rr_check, rr;
+	rr_check = Feature_Finder("Relentless Rage");
+	int ret_check, ret_setter = 0;
+	char ret_ask;
+	cout << "Current hit points: " << Character.HPGet() << endl;
+	cout << "How much hit points did you take: ";
+	cin >> dmg;
+	for (int x = 0; x <= 13; x++){
+		if (x < 9)
+			cout << "[" << x + 1 << "] - " << DamageTypes[x] << endl;
+		else{
+			if (x == 9)
+				cout << "[A] - " << DamageTypes[x] << endl;
+			else if (x == 10)
+				cout << "[B] - " << DamageTypes[x] << endl;
+			else if (x == 11)
+				cout << "[C] - " << DamageTypes[x] << endl;
+			else if (x == 12)
+				cout << "[D] - " << DamageTypes[x] << endl;
+		}
+	}
+	do{
+		cout << "Choose the damage type: ";
+		cin >> dmg_type_pick;
+		switch(dmg_type_pick){
+			case '1':
+				dmg_type = "Acid";
+				res = Resistance_Finder("Acid");
+				imm = Immunity_Finder("Acid");
+				tres = Resistance_Finder("AcidT");
+				timm = Immunity_Finder("AcidT");
+				setter++;
+				break;
+			case '2':
+				dmg_type = "Bludgeoning";
+				res = Resistance_Finder("Bludgeoning");
+				imm = Immunity_Finder("Bludgeoning");
+				tres = Resistance_Finder("BludgeoningT");
+				timm = Immunity_Finder("BludgeoningT");
+				setter++;
+				break;
+			case '3':
+				dmg_type = "Cold";
+				res = Resistance_Finder("Cold");
+				imm = Immunity_Finder("Cold");
+				tres = Resistance_Finder("ColdT");
+				timm = Immunity_Finder("ColdT");
+				setter++;
+				break;
+			case '4':
+				dmg_type = "Fire";
+				res = Resistance_Finder("Fire");
+				imm = Immunity_Finder("Fire");
+				tres = Resistance_Finder("FireT");
+				timm = Immunity_Finder("FireT");
+				setter++;
+				break;
+			case '5':
+				dmg_type = "Force";
+				res = Resistance_Finder("Force");
+				imm = Immunity_Finder("Force");
+				tres = Resistance_Finder("ForceT");
+				timm = Immunity_Finder("ForceT");
+				setter++;
+				break;
+			case '6':
+				dmg_type = "Lightning";
+				res = Resistance_Finder("Lightning");
+				imm = Immunity_Finder("Lightning");
+				tres = Resistance_Finder("LightningT");
+				timm = Immunity_Finder("LightningT");
+				setter++;
+				break;
+			case '7':
+				dmg_type = "Necrotic";
+				res = Resistance_Finder("Necrotic");
+				imm = Immunity_Finder("Necrotic");
+				tres = Resistance_Finder("NecroticT");
+				timm = Immunity_Finder("NecroticT");
+				setter++;
+				break;
+			case '8':
+				dmg_type = "Piercing";
+				res = Resistance_Finder("Piercing");
+				imm = Immunity_Finder("Piercing");
+				tres = Resistance_Finder("PiercingT");
+				timm = Immunity_Finder("PiercingT");
+				setter++;
+				break;
+			case '9':
+				dmg_type = "Poison";
+				res = Resistance_Finder("Poison");
+				imm = Immunity_Finder("Poison");
+				tres = Resistance_Finder("PoisonT");
+				timm = Immunity_Finder("PoisonT");
+				setter++;
+				break;
+			case 'A': case 'a':
+				dmg_type = "Psychic";
+				res = Resistance_Finder("Psychic");
+				imm = Immunity_Finder("Psychic");
+				tres = Resistance_Finder("PsychicT");
+				timm = Immunity_Finder("PsychicT");
+				setter++;
+				break;
+			case 'B': case 'b':
+				dmg_type = "Radiant";
+				res = Resistance_Finder("Radiant");
+				imm = Immunity_Finder("Radiant");
+				tres = Resistance_Finder("RadiantT");
+				timm = Immunity_Finder("RadiantT");
+				setter++;
+				break;
+			case 'C': case 'c':
+				dmg_type = "Slashing";
+				res = Resistance_Finder("Slashing");
+				imm = Immunity_Finder("Slashing");
+				tres = Resistance_Finder("SlashingT");
+				timm = Immunity_Finder("SlashingT");
+				setter++;
+				break;
+			case 'D': case 'd':
+				dmg_type = "Thunder";
+				res = Resistance_Finder("Thunder");
+				imm = Immunity_Finder("Thunder");
+				tres = Resistance_Finder("ThunderT");
+				timm = Immunity_Finder("ThunderT");
+				setter++;
+				break;
+			default:
+				cout << "Please pick a proper option." << endl;
+		}
+	}while(setter == 0);
+
+	if(res == 1 || tres == 1)
+		dmg /= 2;
+
+	if(imm == 1 || timm == 1)
+		cout << "You are immune to " << dmg_type << " damage!" << endl;
+	else{
+		cout << "You took " << dmg << " hitpoints of " << dmg_type << " damage!" << endl;
+		if(dmg > (Character.HPGet() + Character.HPMaxGet()/2)){
+			cout << "You took too many damage! You have died!" << endl;
+			Character.HPSet(0);
+		}
+		else{
+			Character.HPAdd(-dmg);
+			if(Character.HPGet() <= 0){
+				cout << "You are now at 0 hitpoints!" << endl;
+				if(rr_check == 1 && Character.rageactiveGet() == 1){
+					cout << "You still have hope! You will roll to live!" << endl;
+					rr = (rand() % 20) + 1;
+					if(rr >= rr_DC){
+						cout << "You successfully rolled a " << rr << ", you are back to 1 health!" << endl;
+						Character.HPSet(1);
+						rr_DC += 5;
+					}
+				}
+				else{
+					Character.HPSet(0);
+					Death_Roll();
+				}
+			}
+			else{
+				cout << "You are now at " << Character.HPGet() << " hitponts!" << endl;
+				ret_check = Feature_Finder("Retaliation");
+			}
+		}
+	}
+
+	if(ret_check == 1){
+		do{
+			cout << "Were you attacked by a creature right next to you? [Y] or [N]: ";
+			cin >> ret_ask;
+			switch(ret_ask){
+				case 'Y': case 'y':
+					Character.rageskipSet(1);
+					Weapon_Attack();
+					Character.rageskipSet(0);
+				case 'N': case 'n':
+					cout << "Understood." << endl;
+					ret_setter++;
+					break;
+				default:
+					cout << "Please enter the right option. ";
+			}
+		}while(ret_setter == 0);
+	}
+
+	int icp_check = 0;
+	icp_check = Feature_Finder("Interception");
+	if(icp_check = 1){
+		char ask;
+		int isetter = 0;
+		int i;
+		cout << "Do you have a teammate next to that you want to block from projectiles? [Y] or [N]: ";
+		do{
+			cin >> ask;
+			switch(ask){
+				case 'Y': case 'y':
+					i = (rand() % 20) + 1 + Character.profGet();
+					isetter++;
+					cout << "You reduced their damage by " << i << " hitpoints!" << endl;
+					break;
+				case 'N': case 'n':
+					isetter++;
+					cout << "Understood.";
+					break;
+				default:
+					cout << "Please enter again: ";
+			}
+		}while(isetter == 0);
+	}
+
+	int prot_check = 0;
+	prot_check = Feature_Finder("Protection");
+	if(prot_check = 1){
+		char ask;
+		int psetter = 0;
+		int p;
+		cout << "Do you have an ally next to that you want to protect? [Y] or [N]: ";
+		do{
+			cin >> ask;
+			switch(ask){
+				case 'Y': case 'y':
+					psetter++;
+					cout << "You have imposed disadvantage on the enemy!" << endl;
+					break;
+				case 'N': case 'n':
+					psetter++;
+					cout << "Understood.";
+					break;
+				default:
+					cout << "Please enter again: ";
+			}
+		}while(psetter == 0);
+	}
+
+}
+
+void Other_Actions(string action){
+	cout << "L";
+}
+
+void Other_Actions_Choose(){
+	int x = 0, setter = 0;
+	string pick;
+	cin.ignore(1,'\n');
+	while(x < 30){
+		if(Character.otherActions[x] != "0")
+			cout << x + 1 << ". " << Character.otherActions[x] << endl;
+		x++;
+	}
+	do{
+		cout << "Choose an action: ";
+		getline(cin, pick);
+		int temp = 0;
+		while(temp < 30){
+			if(Character.otherActions[temp] == pick){
+				setter++;
+				Other_Actions(pick);
+				break;
+			}
+		else
+			temp++;
+		}
+	}while(setter == 0);
+}
+
+void Battle(){
+	cout << "Roll for Initiative!" << endl;
+	Roll_Initiative();
+	int s = Character.speedGet();
+	//Swim Speed;
+	int fs = Character.flyGet();
+	int ss = 30, p;
+	int run_previous;
+	int battle_setter = 0;
+	int action = 1, bonus = 1, reaction = 1;
+	int turn = 1;
+	int tt_check = 0;
+	int bas_check = 0, bas_AC;
+	do{
+		if(action == 0 && bonus == 0 && reaction == 0 && s == 0){
+			s = Character.speedGet();
+			fs = Character.flyGet();
+			ss = 30;
+			action = 1, bonus = 1, reaction = 1;
+			turn++;
+			if(tt_check == 1){
+				Tiger_Bonus(-1);
+				tt_check = 0;
+			}
+			if(bas_check != 0)
+				Character.acChange(-bas_check);
+			if(Character.rageactiveGet() == 1){
+				Character.rageturnAdd(-1);
+				if(Character.rageturnGet() == 0){
+					Rage_Disable();
+				}
+			}
+			continue;
+		}
+		else{
+			cout << "Turn " << turn << "!" << endl;
+			cout << "[1] - Weapon Attack" << endl;
+			cout << "[2] - Cast Spells" << endl;
+			cout << "[3] - Other Actions" << endl;
+			cout << "[4] - Bonus Actions" << endl;
+			cout << "[5] - Reactions" << endl;
+			cout << "[6] - Take Damage" << endl;
+			cout << "[7] - Save Throw" << endl;
+			cout << "[8] - Skill Check" << endl;
+			cout << "[9] - Move" << endl;
+			cout << "[0] - End Turn" << endl;
+			cout << "[X] - End Battle" << endl;
+			cout << "Choose what to do: ";
+			char MenuPick;
+			cin >> MenuPick;
+			switch(MenuPick){
+				case '1':
+					Weapon_Attack();
+					action--;
+					break;
+				case '2':
+					Cast_Spell();
+					action--;
+					break;
+				case '3':
+					Other_Actions_Choose();
+					action--;
+					break;
+				case '4':
+					if(bonus == 0)
+						cout << "You have already expended your bonus action!" << endl;
+					else{
+						Bonus_Actions_Choose();
+						bonus--;
+					}
+					break;
+				case '5':
+					//Reactions();
+					reaction--;
+					break;
+				case '6':
+					Take_Damage();
+					break;
+				case '7':
+					Save_Throws();
+					break;
+				case '8':
+					Skill_Check(0,'0');
+					break;
+				case '9':
+					if(s == 0)
+						cout << "You have expended all your movement!" << endl;
+					else{
+						p = Approach(s, fs, ss);
+						tt_check = Tiger_Bonus(p);
+						bas_check = Bait_Switch(p);
+						if(bas_check != 0){
+							Character.acChange(bas_check);
+							cout << "You gain a temporary " << bas_check << " AC!" << endl;
+						}
+					}
+					cout << p << endl;
+					break;
+				case '0':
+					s = Character.speedGet();
+					fs = Character.flyGet();
+					ss = 30;
+					action = 1, bonus = 1, reaction = 1;
+					turn++;
+					if(tt_check == 1){
+						Tiger_Bonus(-1);
+						tt_check = 0;
+					}
+					if(bas_check != 0)
+						Character.acChange(-bas_check);
+					if(Character.rageactiveGet() == 1){
+						Character.rageturnAdd(-1);
+						if(Character.rageturnGet() == 0){
+							Rage_Disable();
+						}
+					}
+					break;
+
+				case 'X': case 'x':
+					battle_setter++;
+					break;
+				default:
+					cout << "Please try again." << endl;
+			}
+		}
+	}while(battle_setter == 0);
+}
+
+int main(){
+	weaponMaker();
+	Character.basespeedSet(30);
+	Character.speedSet(30);
+	Character.armorSet("0");
+	Character.baseflySet(0);
+	cout << Character.flyGet();
+	Character.flySet(Character.baseflyGet());
+
+
+	do{
+	cout << "Choose a class: ";
+	char pick;
+	cin >> pick;
+	cout << endl;
+
+	switch(pick)
+	{
+		case '1':
+
+			break;
+		case '2':
+			cout << "Are you sure? (Choose Y or N) ";
+			cin >> pick;
+			switch(pick)
+			{
+				case 'Y': case 'y': Character.TotalLevel = 1;
+					Character.BarbLevel += 1; Barbarian();
+					Character.profSet(2); z = 0;
+					player_class = ClassList[1]; break;
+				case 'N': case 'n': continue;
+				default: cout << "Please enter a valid input." << endl; continue;
+			}
+			break;
+		case '3':
+			cout << "Are you sure? (Choose Y or N) ";
+			cin >> pick;
+			switch(pick)
+			{
+				case 'Y': case 'y': Character.TotalLevel += 1;
+					//Character.BardLevel += 1; Bard();
+					z = 0; player_class = ClassList[1]; break;
+				case 'N': case 'n': continue;
+				default: cout << "Please enter a valid input." << endl; continue;
+			}
+			break;
+		case '4':
+			cout << "Are you sure? (Choose Y or N) ";
+			cin >> pick;
+			switch(pick)
+			{
+				case 'Y': case 'y': Character.TotalLevel += 1;
+					//Character.ClericLevel += 1; Cleric();
+					z = 0; player_class = ClassList[1]; break;
+				case 'N': case 'n': continue;
+				default: cout << "Please enter a valid input." << endl; continue;
+			}
+			break;
+		case '5':
+			break;
+		case '6':
+			cout << "Are you sure? (Choose Y or N) ";
+			cin >> pick;
+			switch(pick)
+			{
+				case 'Y': case 'y': Character.TotalLevel = 1;
+					Character.FighLevel += 1; Fighter();
+					Character.profSet(2); z = 0;
+					player_class = ClassList[5]; break;
+				case 'N': case 'n': continue;
+				default: cout << "Please enter a valid input." << endl; continue;
+			}
+			break;
+		case '7':
+			break;
+
+		case '8':
+			break;
+		case '9':
+			break;
+		case 'A':
+			break;
+		case 'B':
+			break;
+		case 'C':
+			break;
+		case 'D':
+			break;
+		default:
+			break;
+	}
+	}while(z == 1);
+	Character.playerclassSet(player_class);
+	ModifiersUpdater();
+
+	int ZA_KEY = 0;
+	do{
+	cout << "Menu!!!" << endl;
+	cout << "[1] - Add EXP" << endl;
+	cout << "[2] - Add Weapons" << endl;
+	cout << "[3] - Add Ammunition" << endl;
+	cout << "[4] - Manage Equipment" << endl;
+	cout << "[5] - Discard Weapons" << endl;
+	cout << "[6] - Discard Items" << endl;
+	cout << "[7] - Add Armors" << endl;
+	cout << "[8] - Discard Armors" << endl;
+	cout << "[9] - Don/Undon Armors" << endl;
+	cout << "[0] - Wear Shield" << endl;
+	cout << "[A] - Short Rest" << endl;
+	cout << "[B] - Long Rest" << endl;
+	cout << "[C] - Initiate Battle" << endl;
+	cout << "Choose what to do: ";
+	char MenuPick;
+	cin >> MenuPick;
+	switch(MenuPick){
+		case '1':
+			Add_EXP();
+			Level_Checker();
+			ModifiersUpdater();
+			break;
+		case '2':
+			Add_Weapons();
+			break;
+		case '3':
+			Add_Ammunition();
+			break;
+		case '4':
+			Add_Item();
+			break;
+		case '5':
+			Weapon_Discard();
+			break;
+		case '6':
+			Item_Discard();
+			break;
+		case '7':
+			Add_Armor();
+			break;
+		case '8':
+			Armor_Discard();
+			break;
+		case '9':
+			Armor_Choose();
+			break;
+		case '0':
+			Shield_Wear();
+			break;
+		case 'A': case 'a':
+			Short_Rest();
+			break;
+		case 'B': case 'b':
+			Long_Rest();
+			break;
+			break;
+		case 'C': case 'c':
+			Battle();
+			break;
+	}
+	}while(ZA_KEY == 0);
+
+	return 0;
+}
+
